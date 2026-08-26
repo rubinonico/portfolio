@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOLD'EM HOTSTREAK — Scratch &amp; Match</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1410;
+    --paper:#f4ead3;
+    --paper-edge:#e6d6b0;
+    --crimson:#b5202a;
+    --crimson-dk:#7d141b;
+    --teal:#0c6b6b;
+    --gold:#c79a3a;
+    --gold-lt:#e8c66a;
+    --latex:#8d8378;
+    --latex-2:#a39888;
+    --win:#0c6b6b;
+    --shadow:rgba(40,20,8,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Oswald',sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, #2a211a 0%, transparent 50%),
+      radial-gradient(circle at 80% 90%, #241c14 0%, transparent 55%),
+      #181210;
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:28px 16px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .stage{width:100%;max-width:860px;}
+  header.brand{text-align:center;margin-bottom:18px;color:var(--paper);}
+  header.brand h1{
+    font-family:'Bungee',cursive;
+    font-size:clamp(28px,6vw,52px);
+    margin:0;
+    letter-spacing:1px;
+    color:var(--gold-lt);
+    text-shadow:0 2px 0 var(--crimson-dk), 0 4px 14px rgba(0,0,0,.6);
+  }
+  header.brand p{
+    margin:4px 0 0;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#b8a98a;
+  }
+
+  /* ---------- TICKET ---------- */
+  .ticket{
+    position:relative;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,.012) 0 2px, transparent 2px 5px),
+      var(--paper);
+    border-radius:14px;
+    padding:20px 20px 24px;
+    box-shadow:0 18px 40px -10px rgba(0,0,0,.7), inset 0 0 0 2px var(--paper-edge);
+    border:3px solid var(--ink);
+  }
+  /* perforated guilloché-ish frame */
+  .ticket::before{
+    content:"";position:absolute;inset:8px;border:2px dashed rgba(125,20,27,.35);
+    border-radius:8px;pointer-events:none;
+  }
+  .tk-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    margin-bottom:14px;position:relative;z-index:2;flex-wrap:wrap;gap:8px;
+  }
+  .tk-head .price{
+    background:var(--crimson);color:var(--gold-lt);
+    font-family:'Bungee',cursive;font-size:22px;
+    padding:6px 14px;border-radius:8px;border:2px solid var(--ink);
+    box-shadow:0 3px 0 var(--crimson-dk);
+  }
+  .tk-head .serial{
+    font-family:'DM Mono',monospace;font-size:11px;color:#6e5c3e;
+    text-align:right;line-height:1.5;letter-spacing:1px;
+  }
+  .tk-title{
+    font-family:'Bungee',cursive;color:var(--crimson);
+    font-size:clamp(18px,3.4vw,26px);text-align:center;margin:2px 0 2px;
+  }
+  .tk-sub{
+    text-align:center;font-family:'DM Mono',monospace;font-size:11px;
+    letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:14px;
+  }
+
+  /* ---------- BOARD ---------- */
+  .section-label{
+    display:flex;align-items:center;gap:10px;margin:6px 0 10px;
+    font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:13px;color:var(--ink);
+  }
+  .section-label::before,.section-label::after{
+    content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 10px);opacity:.5;
+  }
+  .board{
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+    background:rgba(12,107,107,.07);border:2px solid rgba(12,107,107,.3);
+    border-radius:10px;padding:14px 10px;margin-bottom:8px;
+  }
+
+  /* ---------- HANDS GRID ---------- */
+  .hands{
+    display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px;
+  }
+  .hand{
+    background:rgba(181,32,42,.05);
+    border:2px solid rgba(26,20,16,.25);
+    border-radius:10px;padding:12px;position:relative;
+    transition:border-color .3s, box-shadow .3s, background .3s;
+  }
+  .hand.won{
+    border-color:var(--gold);background:rgba(199,154,58,.16);
+    box-shadow:0 0 0 3px rgba(199,154,58,.3), 0 6px 18px -6px var(--shadow);
+  }
+  .hand-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .hand-name{font-weight:700;letter-spacing:1px;font-size:13px;text-transform:uppercase;}
+
+  /* ---------- PRIZE BOX ---------- */
+  .prize-slot{
+    position:relative;width:128px;height:40px;border-radius:6px;overflow:hidden;
+    border:2px solid var(--ink);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);
+    flex:0 0 auto;background:#fffdf7;
+  }
+  .prize-face{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;line-height:1;text-align:center;
+    background:repeating-linear-gradient(45deg, rgba(199,154,58,.10) 0 6px, transparent 6px 12px), #fffdf7;
+  }
+  .prize-face.win{background:repeating-linear-gradient(45deg, rgba(199,154,58,.22) 0 6px, transparent 6px 12px), #fff7e4;}
+  .prize-amt{font-family:'Bungee',cursive;font-size:16px;color:var(--crimson);}
+  .prize-amt.none{font-size:12px;color:#9a8c6e;letter-spacing:1px;}
+  .prize-rank{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.5px;
+    text-transform:uppercase;color:var(--teal);margin-top:2px;}
+  .prize-scratch{position:absolute;inset:0;z-index:2;}
+  .prize-slot.revealed .prize-scratch{display:none;}
+  .prize-slot.revealing .prize-face{animation:prizePop .3s ease;}
+  @keyframes prizePop{0%{transform:scale(.8);}55%{transform:scale(1.08);}100%{transform:scale(1);}}
+
+  .holecards{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .board .card-slot{width:60px;height:82px;}
+
+  /* ---------- CARD + SCRATCH ---------- */
+  .card-slot{position:relative;width:54px;height:74px;flex:0 0 auto;}
+  @media(max-width:380px){.card-slot{width:46px;height:64px;}}
+  .playing-card{
+    position:absolute;inset:0;border-radius:7px;background:#fffdf7;
+    border:1.5px solid #d8cdb2;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:4px 5px;box-shadow:inset 0 0 0 1px #fff, 0 1px 2px rgba(0,0,0,.15);
+    font-family:'DM Mono',monospace;
+  }
+  .pc-rank{font-size:15px;font-weight:600;line-height:1;}
+  .pc-suit{font-size:18px;line-height:1;align-self:flex-end;}
+  .pc-mid{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.9;}
+  .red{color:#c0202a;}
+  .black{color:#1a1410;}
+  .scratch{
+    position:absolute;inset:0;border-radius:7px;cursor:pointer;
+    touch-action:none;z-index:3;
+  }
+  .card-slot.revealed .scratch{display:none;}
+  .card-slot .playing-card{transition:transform .18s ease;}
+  .card-slot.revealing .playing-card{animation:cardPop .26s ease;}
+  @keyframes cardPop{
+    0%{transform:scale(.86);} 60%{transform:scale(1.06);} 100%{transform:scale(1);}
+  }
+  .scratch{cursor:pointer;}
+
+  /* ---------- CONTROLS / TOTALS ---------- */
+  .footer{
+    margin-top:18px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;
+    position:relative;z-index:2;
+  }
+  .total-box{
+    font-family:'Bungee',cursive;font-size:clamp(15px,3vw,20px);
+    background:var(--ink);color:var(--gold-lt);padding:8px 16px;border-radius:8px;
+    border:2px solid var(--gold);
+  }
+  .total-box span{color:#fff;}
+  .total-box.big-win{animation:pulse 1s ease infinite;background:var(--crimson);}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;}
+  button{
+    font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;font-size:13px;cursor:pointer;border:2px solid var(--ink);
+    border-radius:8px;padding:10px 18px;transition:transform .1s, box-shadow .15s;
+  }
+  button:active{transform:translateY(2px);}
+  .btn-primary{background:var(--gold);color:var(--ink);box-shadow:0 3px 0 #8a6a1f;}
+  .btn-primary:active{box-shadow:0 1px 0 #8a6a1f;}
+  .btn-ghost{background:transparent;color:var(--ink);box-shadow:0 3px 0 rgba(26,20,16,.4);}
+  .btn-ghost:active{box-shadow:0 1px 0 rgba(26,20,16,.4);}
+
+  /* ---------- PAYTABLE / LEGEND ---------- */
+  .legend{
+    margin-top:22px;background:rgba(244,234,211,.95);border-radius:12px;
+    border:2px solid var(--ink);padding:16px 18px;color:var(--ink);
+  }
+  .legend h3{
+    font-family:'Bungee',cursive;font-size:15px;margin:0 0 10px;color:var(--crimson);letter-spacing:1px;
+  }
+  .pt{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 18px;}
+  .pt div{
+    display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:12px;
+    border-bottom:1px dotted rgba(26,20,16,.3);padding:3px 0;
+  }
+  .pt div b{color:var(--teal);}
+  .note{font-size:11px;color:#6e5c3e;margin-top:10px;font-family:'DM Mono',monospace;line-height:1.6;}
+  .confetti{position:fixed;width:9px;height:14px;top:-20px;z-index:99;pointer-events:none;border-radius:2px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <header class="brand">
+    <h1>HOLD'EM HOTSTREAK</h1>
+    <p>Scratch your hole cards · Scratch each board · Prizes reveal as boards complete</p>
+  </header>
+
+  <div class="ticket" id="ticket">
+    <div class="tk-head">
+      <div class="price">$5</div>
+      <div class="serial" id="serial">TKT-000000<br>GAME 514 · PACK 09</div>
+    </div>
+    <div class="tk-title">HOLE 'EM &amp; HOLD</div>
+    <div class="tk-sub">2 shared hole cards · 4 boards · best 5 of 7 wins</div>
+
+    <div class="section-label">Your Hole Cards · Shared</div>
+    <div class="board" id="board"></div>
+
+    <div class="section-label">Your 4 Boards</div>
+    <div class="hands" id="hands"></div>
+
+    <div class="footer">
+      <div class="total-box" id="totalBox">TOTAL WON: <span id="total">$0</span></div>
+      <div class="btns">
+        <button class="btn-ghost" id="revealAll">Reveal All</button>
+        <button class="btn-primary" id="newTicket">New Ticket</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <h3>Paytable — pays per hand</h3>
+    <div class="pt" id="paytable"></div>
+    <div class="note" id="note"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   HOLD'EM HOTSTREAK — fixed pre-printed scratch-off
+   Outcome decided at "print" (newTicket). Scratching is cosmetic.
+   ============================================================ */
+
+const SUITS = [
+  {s:'♠', c:'black'}, {s:'♥', c:'red'}, {s:'♦', c:'red'}, {s:'♣', c:'black'}
+];
+const RANKS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+const RVAL  = {'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'J':11,'Q':12,'K':13,'A':14};
+
+// Paytable: rank key -> {label, pay (number, 0 = free ticket shown as 'FREE')}
+const PAYTABLE = [
+  ['royal',   'Royal Flush',     10000],
+  ['sflush',  'Straight Flush',   1000],
+  ['quads',   'Four of a Kind',    250],
+  ['boat',    'Full House',         50],
+  ['flush',   'Flush',              20],
+  ['straight','Straight',           10],
+  ['trips',   'Three of a Kind',     5],
+  ['twopair', 'Two Pair',            2],
+  ['pairjacks','Pair of Jacks+',    -1],   // -1 sentinel = FREE TICKET
+];
+const PAYMAP = Object.fromEntries(PAYTABLE.map(p=>[p[0],{label:p[1],pay:p[2]}]));
+
+const NUM_HANDS = 4;
+let deck = [];
+
+/* ---------- deck / deal ---------- */
+function freshDeck(){
+  const d=[];
+  for(const su of SUITS) for(const r of RANKS) d.push({r, ...su});
+  for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}
+  return d;
+}
+
+/* ---------- hand evaluation: best 5 of 7 ---------- */
+function evaluate7(cards){
+  // returns the paytable KEY of the best made hand, or null
+  const vals = cards.map(c=>RVAL[c.r]).sort((a,b)=>b-a);
+  const suitCount = {};
+  cards.forEach(c=>{ (suitCount[c.s]=suitCount[c.s]||[]).push(RVAL[c.r]); });
+  const counts = {};
+  vals.forEach(v=>counts[v]=(counts[v]||0)+1);
+  const groups = Object.entries(counts).map(([v,n])=>[+v,n])
+                  .sort((a,b)=> b[1]-a[1] || b[0]-a[0]);
+
+  // flush (5+ of a suit) + straight-flush / royal detection
+  let flushSuit=null;
+  for(const s in suitCount) if(suitCount[s].length>=5) flushSuit=s;
+  const isStraightIn = (arr)=>{
+    const set=new Set(arr);
+    // ace plays low for the wheel
+    if(set.has(14)) set.add(1);
+    const u=[...set].sort((a,b)=>a-b); // ascending
+    let run=1, best=0;
+    for(let i=1;i<u.length;i++){
+      if(u[i]===u[i-1]+1){ run++; if(run>=5) best=u[i]; } // u[i] is the high card of the run
+      else run=1;
+    }
+    return best; // 0 if none; otherwise the highest card of the best straight
+  };
+  if(flushSuit){
+    const high = isStraightIn(suitCount[flushSuit]);
+    if(high){ return high===14 ? 'royal' : 'sflush'; }
+  }
+  if(groups[0][1]===4) return 'quads';
+  if(groups[0][1]===3 && groups[1] && groups[1][1]>=2) return 'boat';
+  if(flushSuit) return 'flush';
+  if(isStraightIn(vals)) return 'straight';
+  if(groups[0][1]===3) return 'trips';
+  if(groups[0][1]===2 && groups[1] && groups[1][1]===2) return 'twopair';
+  if(groups[0][1]===2 && groups[0][0]>=11) return 'pairjacks';
+  return null;
+}
+
+/* ---------- rendering ---------- */
+function cardHTML(card){
+  return `<div class="playing-card">
+    <div class="pc-rank ${card.c}">${card.r}</div>
+    <div class="pc-mid ${card.c}">${card.s}</div>
+    <div class="pc-suit ${card.c}">${card.s}</div>
+  </div>`;
+}
+
+const scratchSlots = []; // track for "reveal all"
+
+function buildCardSlot(card, parent, onComplete){
+  const slot=document.createElement('div');
+  slot.className='card-slot';
+  slot.innerHTML=cardHTML(card);
+  const cv=document.createElement('canvas');
+  cv.className='scratch';
+  parent.appendChild(slot);
+  slot.appendChild(cv);
+  setupScratch(slot, cv, {label:'', manual:true, onComplete});
+  scratchSlots.push(slot);
+  return slot;
+}
+
+function setupScratch(slot, canvas, opts={}){
+  const label = opts.label || 'SCRATCH';
+  const manual = opts.manual !== false;   // cards allow drag-scratch; prize box is auto-only
+  const onComplete = opts.onComplete || null;
+  const rect=()=>slot.getBoundingClientRect();
+  let w,h,ctx,revealed=false,animating=false;
+  function init(){
+    const r=rect(); w=Math.round(r.width)||60; h=Math.round(r.height)||82;
+    canvas.width=w; canvas.height=h;
+    ctx=canvas.getContext('2d');
+    paintLatex();
+  }
+  function paintLatex(){
+    ctx.globalCompositeOperation='source-over';
+    // brushed-metallic base
+    const g=ctx.createLinearGradient(0,0,w*0.4,h);
+    g.addColorStop(0,'#b8ae9d'); g.addColorStop(.35,'#938979');
+    g.addColorStop(.65,'#a59a89'); g.addColorStop(1,'#857b6c');
+    ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    // brushed streaks
+    ctx.globalAlpha=.18;
+    for(let i=0;i<14;i++){
+      ctx.strokeStyle = i%2 ? '#cfc6b4' : '#6f6657';
+      ctx.lineWidth = .6+Math.random();
+      ctx.beginPath();
+      const yy=Math.random()*h;
+      ctx.moveTo(0, yy); ctx.lineTo(w, yy+(Math.random()-.5)*6); ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    // fine grain
+    for(let i=0;i<90;i++){
+      const v=100+Math.random()*60|0;
+      ctx.fillStyle=`rgba(${v},${v-8},${v-18},.45)`;
+      ctx.fillRect(Math.random()*w, Math.random()*h, 1, 1);
+    }
+  }
+  requestAnimationFrame(init);
+
+  // rough coin stroke: cluster of jittered arcs so the edge looks torn, not geometric
+  function coinStamp(x,y,r){
+    for(let k=0;k<4;k++){
+      const jx=(Math.random()-.5)*r*0.7, jy=(Math.random()-.5)*r*0.7;
+      ctx.beginPath(); ctx.arc(x+jx, y+jy, r*(0.55+Math.random()*0.5), 0, Math.PI*2); ctx.fill();
+    }
+  }
+
+  function autoScratch(){
+    if(revealed||animating||!ctx) return;
+    animating=true;
+    ctx.globalCompositeOperation='destination-out';
+    const radius=Math.max(w,h)*0.17;
+    const rows=Math.max(4, Math.round(h/ (radius*1.3)));
+    const totalMs=520;
+    const start=performance.now();
+    function frame(now){
+      const t=Math.min(1,(now-start)/totalMs);
+      const prog=t*rows, passesDone=Math.floor(prog), frac=prog-passesDone;
+      for(let rIdx=0;rIdx<=passesDone && rIdx<rows;rIdx++){
+        const y=(rIdx+0.5)*(h/rows);
+        const ltr=rIdx%2===0;
+        const xFrac = rIdx<passesDone ? 1 : frac;
+        const xEnd = ltr ? w*xFrac : w*(1-xFrac);
+        const xStart = ltr ? 0 : w;
+        for(let x=Math.min(xStart,xEnd); x<=Math.max(xStart,xEnd); x+=radius*0.45){
+          coinStamp(x, y, radius);
+        }
+      }
+      if(t<1){ requestAnimationFrame(frame); } else { finish(); }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function finish(){
+    ctx.clearRect(0,0,w,h);
+    revealed=true; animating=false;
+    slot.classList.add('revealing');
+    setTimeout(()=>{
+      slot.classList.add('revealed');
+      if(onComplete) onComplete();
+    }, 160);
+  }
+  function doReveal(){
+    if(revealed) return;
+    revealed=true; animating=false;
+    slot.classList.add('revealed');
+    if(onComplete) onComplete();
+  }
+  slot._forceReveal=doReveal;
+  slot._autoScratch=autoScratch;
+  slot._isRevealed=()=>revealed;
+
+  // manual coin drag (cards) — drag to erase; one full pass auto-completes the rest
+  if(manual){
+    let drawing=false, erased=0;
+    function pos(e){ const r=rect(); const p=e.touches?e.touches[0]:e; return {x:p.clientX-r.left, y:p.clientY-r.top}; }
+    function stroke(p){
+      if(!ctx||revealed) return;
+      ctx.globalCompositeOperation='destination-out';
+      coinStamp(p.x, p.y, Math.max(w,h)*0.16);
+      erased++;
+      if(erased>10) maybeFinish();   // enough manual scratching → auto-clear the rest
+    }
+    function maybeFinish(){
+      if(revealed||animating) return;
+      // sample alpha; if mostly gone, finish
+      try{
+        const d=ctx.getImageData(0,0,w,h).data; let clear=0,tot=0;
+        for(let i=3;i<d.length;i+=4*16){ tot++; if(d[i]===0) clear++; }
+        if(clear/tot > 0.45){ animating=true; finish(); }
+      }catch(e){}
+    }
+    function down(e){ drawing=true; stroke(pos(e)); e.preventDefault(); }
+    function move(e){ if(drawing){ stroke(pos(e)); e.preventDefault(); } }
+    function up(){ drawing=false; }
+    canvas.addEventListener('mousedown',down);
+    canvas.addEventListener('mousemove',move);
+    window.addEventListener('mouseup',up);
+    canvas.addEventListener('touchstart',down,{passive:false});
+    canvas.addEventListener('touchmove',move,{passive:false});
+    canvas.addEventListener('touchend',up);
+    // a plain click (no drag) still auto-scratches the whole card
+    canvas.addEventListener('click',()=>{ if(erased<3) autoScratch(); });
+  }
+}
+
+/* ---------- game state ---------- */
+let hole=[], boards=[], scored=false, holeSlots=[], boardDivs=[];
+
+function newTicket(){
+  scratchSlots.length=0; scored=false; runningTotal=0; holeSlots=[]; boardDivs=[];
+  deck=freshDeck();
+  // Version B: 2 shared hole cards on top, each game gets its own 5-card board.
+  // Each board is dealt fresh against the same hole cards (independent games on one ticket).
+  hole = deck.splice(0,2);
+  boards = [];
+  for(let i=0;i<NUM_HANDS;i++){
+    // deal each board from a deck that excludes the hole cards (no impossible duplicates within a game)
+    const sub = freshDeck().filter(c=>!hole.some(h=>h.r===c.r&&h.s===c.s));
+    boards.push(sub.slice(0,5));
+  }
+
+  document.getElementById('serial').innerHTML =
+    'TKT-'+String(Math.floor(Math.random()*1e6)).padStart(6,'0')+
+    '<br>GAME 522 · PACK '+String(Math.floor(Math.random()*99)).padStart(2,'0');
+
+  // shared hole cards
+  const bEl=document.getElementById('board'); bEl.innerHTML='';
+  holeSlots=[];
+  hole.forEach(c=>{ holeSlots.push(buildCardSlot(c, bEl, ()=>checkAllBoards())); });
+
+  // boards (one per game)
+  const hEl=document.getElementById('hands'); hEl.innerHTML='';
+  boardDivs=[];
+  boards.forEach((bd,idx)=>{
+    const key=evaluate7([...hole,...bd]);
+    const div=document.createElement('div');
+    div.className='hand'; div.dataset.idx=idx;
+    const pay = key?PAYMAP[key]:null;
+    div.innerHTML=`
+      <div class="hand-top">
+        <div class="hand-name">Board ${idx+1}</div>
+        <div class="prize-slot">
+          <div class="prize-face" data-prize></div>
+          <canvas class="prize-scratch"></canvas>
+        </div>
+      </div>
+      <div class="holecards"></div>`;
+    hEl.appendChild(div);
+    const hc=div.querySelector('.holecards');
+    div._cardSlots=[];
+    bd.forEach(c=>{ div._cardSlots.push(buildCardSlot(c, hc, ()=>onCardDone(div))); });
+    div._key=key; div._pay=pay; div._done=false; div._counted=false;
+
+    // fill the (hidden) prize face
+    const face=div.querySelector('[data-prize]');
+    if(key){
+      const isFree = pay.pay===-1;
+      face.innerHTML = `<span class="prize-amt">${isFree?'FREE':'$'+pay.pay}</span>`+
+                       `<span class="prize-rank">${pay.label}</span>`;
+      face.classList.add('win');
+    }else{
+      face.innerHTML = `<span class="prize-amt none">NO WIN</span>`;
+    }
+    const pslot=div.querySelector('.prize-slot');
+    const pcanvas=div.querySelector('.prize-scratch');
+    setupScratch(pslot, pcanvas, {label:'PRIZE', manual:false, onComplete:()=>countPrize(div)});
+    div._prizeSlot=pslot;
+    boardDivs.push(div);
+  });
+
+  document.getElementById('total').textContent='$0';
+  document.getElementById('totalBox').classList.remove('big-win');
+}
+
+/* ---------- per-board reveal orchestration ---------- */
+let runningTotal=0;
+
+function holeRevealed(){ return holeSlots.length>0 && holeSlots.every(s=>s._isRevealed && s._isRevealed()); }
+
+// a board's own card finished scratching
+function onCardDone(div){ tryRevealPrize(div); }
+
+// a shared hole card finished → may unlock several boards at once
+function checkAllBoards(){ boardDivs.forEach(tryRevealPrize); }
+
+// if both hole cards AND all 5 board cards are uncovered, auto-scratch this board's prize
+function tryRevealPrize(div){
+  if(div._done) return;
+  if(!holeRevealed()) return;
+  const cardsDone = div._cardSlots.every(s=>s._isRevealed && s._isRevealed());
+  if(!cardsDone) return;
+  div._done=true;
+  // small beat, then the prize box scratches itself open
+  setTimeout(()=>{ if(div._prizeSlot._autoScratch) div._prizeSlot._autoScratch(); }, 220);
+}
+
+// prize box finished scratching → tally it
+function countPrize(div){
+  if(div._counted) return;
+  div._counted=true;
+  const key=div._key, pay=div._pay;
+  if(key){
+    div.classList.add('won');
+    if(pay.pay!==-1){
+      runningTotal+=pay.pay;
+      const tEl=document.getElementById('total');
+      tEl.textContent='$'+runningTotal;
+      document.getElementById('totalBox').classList.add('big-win');
+    }
+    popConfetti(pay.pay>=50?70:26);
+  }
+  // when every board is counted, settle the total box pulse if nothing won
+  if(boardDivs.every(d=>d._counted) && runningTotal===0){
+    document.getElementById('totalBox').classList.remove('big-win');
+  }
+}
+
+// Reveal All: cascade the cards, then let each board's prize fire naturally
+function revealAll(){
+  // reveal hole + all board cards instantly
+  holeSlots.forEach(s=>{ if(s._forceReveal) s._forceReveal(); });
+  boardDivs.forEach(div=>{
+    div._cardSlots.forEach(s=>{ if(s._forceReveal) s._forceReveal(); });
+  });
+  // forceReveal on a board card calls onCardDone via onComplete, which triggers prizes
+}
+
+/* ---------- confetti ---------- */
+function popConfetti(n){
+  const colors=['#c79a3a','#b5202a','#0c6b6b','#e8c66a','#fffdf7'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[i%colors.length];
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    const dur=2200+Math.random()*1600, drift=(Math.random()-.5)*240;
+    c.animate([
+      {transform:`translate(0,0) rotate(0deg)`,opacity:1},
+      {transform:`translate(${drift}px,105vh) rotate(${720+Math.random()*360}deg)`,opacity:.9}
+    ],{duration:dur,easing:'cubic-bezier(.2,.6,.4,1)'});
+    setTimeout(()=>c.remove(),dur);
+  }
+}
+
+/* ---------- paytable render ---------- */
+function renderPaytable(){
+  const el=document.getElementById('paytable');
+  el.innerHTML=PAYTABLE.map(([k,label,pay])=>{
+    const v = pay===-1?'FREE':'$'+pay.toLocaleString();
+    return `<div><span>${label}</span><b>${v}</b></div>`;
+  }).join('');
+  document.getElementById('note').innerHTML =
+    'Your 2 hole cards are shared across all 4 games. Each board is evaluated as the best 5-card poker hand from those 2 shared hole cards plus that board\'s own 5 cards. '+
+    'Boards pay independently and the ticket total is their sum. Pair of Jacks-or-better wins a free ticket. '+
+    'Note: because the hole cards are shared, the four games are <b>correlated through the hole cards, not independent</b> — a pocket pair on top lifts trips/quads everywhere, suited connectors lift straights/flushes everywhere. Outcome is fixed at print; scratching is cosmetic.';
+}
+
+/* ---------- init ---------- */
+document.getElementById('newTicket').addEventListener('click',newTicket);
+document.getElementById('revealAll').addEventListener('click',revealAll);
+renderPaytable();
+newTicket();
+</script>
+</body>
+</html>
