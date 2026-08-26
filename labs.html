@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nico Rubino — Labs</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #e0e0e0; line-height: 1.6; }
+  .container { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem; }
+
+  .back { font-size: 0.85rem; margin-bottom: 2rem; }
+  .back a { color: #6ea8fe; text-decoration: none; font-weight: 500; }
+  .back a:hover { text-decoration: underline; }
+
+  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; color: #fff; }
+  .subtitle { color: #888; margin-bottom: 2.5rem; font-size: 0.95rem; }
+
+  .section { margin-bottom: 2.5rem; }
+  .section-head { margin: 0 0 1rem; }
+  .section-head h2 { font-size: 1.25rem; font-weight: 700; color: #6ea8fe; letter-spacing: 0.02em; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.12em; }
+  .section-head p { color: #777; font-size: 0.85rem; margin-top: 0.2rem; }
+
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.4rem; margin: 0.9rem 0; transition: border-color 0.15s ease; }
+  .card:hover { border-color: #3a3f4a; }
+  .card h3 { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+  .card .kicker { display: inline-block; color: #6ea8fe; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .card p { color: #aaa; font-size: 0.9rem; margin-top: 0.4rem; }
+  .card ul { margin: 0.6rem 0 0 1.1rem; }
+  .card ul li { color: #aaa; font-size: 0.88rem; margin: 0.25rem 0; }
+  .card ul li strong { color: #ccc; font-weight: 600; }
+
+  .tags { margin-top: 0.9rem; }
+  .tag { display: inline-block; background: #22252c; color: #8fb8f8; font-size: 0.72rem; padding: 0.18rem 0.55rem; border-radius: 4px; margin: 0 0.3rem 0.3rem 0; font-family: 'SF Mono', ui-monospace, Menlo, Consolas, monospace; }
+
+  .footer { margin-top: 3rem; color: #555; font-size: 0.85rem; text-align: center; }
+  .footer a { color: #555; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="back"><a href="index.html">&larr; back to projects</a></div>
+
+  <h1>Nico Rubino</h1>
+  <p class="subtitle">labs · research &amp; infrastructure</p>
+
+  <!-- ===================== CHEMISTRY ===================== -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Chemistry</h2>
+      <p>synthesis · process · instrumentation</p>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Multi-Step Organic Synthesis &amp; Process Chemistry</span>
+      <h3>Continuous Synthesis Route Design</h3>
+      <p>End-to-end design of multi-step synthesis routes optimized for continuous flow, pairing computational screening with process-level route evaluation before any bench work.</p>
+      <ul>
+        <li><strong>Computational screening</strong> — DFT (ORCA) and semi-empirical GFN2-xTB for rapid thermodynamic and reactivity ranking of candidate routes and intermediates.</li>
+        <li><strong>Route evaluation framework</strong> — scored decision matrix weighing yield, atom economy, step count, EHS, reagent cost, and flow compatibility.</li>
+        <li><strong>Continuous-flow photochemical reactor</strong> — architecture for UV/VIS photochemistry in flow, addressing photon delivery, residence-time control, and scale-out.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">ORCA</span>
+        <span class="tag">DFT</span>
+        <span class="tag">GFN2-xTB</span>
+        <span class="tag">Python</span>
+        <span class="tag">Process Chemistry</span>
+        <span class="tag">Flow Reactor</span>
+        <span class="tag">Photochemistry</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Distillation Process Analysis System</span>
+      <h3>White Mule — Real-Time Cut-Point Identification</h3>
+      <p>A multi-sensor fusion instrument that identifies distillation cut-points in real time, removing the guesswork from batch distillation.</p>
+      <ul>
+        <li><strong>Multi-sensor fusion</strong> — refractive index, temperature, and conductivity signals fused into a continuous phase/composition estimate.</li>
+        <li><strong>Real-time cut-point detection</strong> — automated heads / hearts / tails transitions flagged live during a run.</li>
+        <li><strong>Sub-$100 BOM</strong> — commodity sensors and a microcontroller keep the bill of materials under $100, a fraction of lab refractometer cost.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Sensor Fusion</span>
+        <span class="tag">Refractive Index</span>
+        <span class="tag">Conductivity</span>
+        <span class="tag">Embedded</span>
+        <span class="tag">&lt;$100 BOM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HARDWARE ===================== -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Hardware</h2>
+      <p>infrastructure · compute · instrumentation</p>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Homelab Infrastructure</span>
+      <h3>Proxmox-Based Homelab &amp; Distributed AI Agents</h3>
+      <p>Self-hosted compute and storage backbone running a distributed AI agent platform with tiered model routing.</p>
+      <ul>
+        <li><strong>Proxmox hypervisor</strong> — virtualized services and isolated workloads across a single-node cluster.</li>
+        <li><strong>NAS + GPU compute</strong> — redundant bulk storage alongside GPU passthrough for on-prem inference and training.</li>
+        <li><strong>Distributed AI agent infrastructure</strong> — orchestrated agents with tiered model routing, dispatching requests across local and remote backends by cost/latency.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Proxmox</span>
+        <span class="tag">NAS</span>
+        <span class="tag">GPU Compute</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Model Routing</span>
+        <span class="tag">Linux</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Distillation Analysis System</span>
+      <h3>White Mule — Instrumentation Build</h3>
+      <p>The hardware side of the White Mule system: a compact, self-contained sensor head and microcontroller interface that streams fused measurements to the analysis software described above.</p>
+      <ul>
+        <li><strong>Sensor head</strong> — refractive-index, temperature, and conductivity probes mounted in a single flow-through module.</li>
+        <li><strong>Microcontroller interface</strong> — low-cost MCU handling acquisition, calibration, and serial/streaming output.</li>
+        <li><strong>Sub-$100 BOM</strong> — deliberately frugal parts selection without sacrificing measurement reliability.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Embedded</span>
+        <span class="tag">Sensors</span>
+        <span class="tag">Microcontroller</span>
+        <span class="tag">CAD</span>
+        <span class="tag">Serial/Streaming</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== OPSEC ===================== -->
+  <div class="section">
+    <div class="section-head">
+      <h2>OPSEC</h2>
+      <p>security · privacy · financial autonomy</p>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Operational Security Research &amp; Infrastructure</span>
+      <h3>Tiered Threat Model &amp; Privacy Architecture</h3>
+      <p>A layered approach to operational security, mapping threat surface to proportional countermeasures and hardening the financial perimeter.</p>
+      <ul>
+        <li><strong>Tiered threat model</strong> — adversaries and assets classified by capability and value, with controls scoped to each tier.</li>
+        <li><strong>Encrypted communications</strong> — end-to-end encrypted messaging and transport choices aligned with the threat model.</li>
+        <li><strong>Financial privacy architecture</strong> — separation of identities and flows, with Monero/DeFi self-custody for uncorrelatable, sovereign value storage.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Threat Modeling</span>
+        <span class="tag">Encryption</span>
+        <span class="tag">Monero</span>
+        <span class="tag">DeFi</span>
+        <span class="tag">Self-Custody</span>
+        <span class="tag">Privacy</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="kicker">Morgul / Silmaril</span>
+      <h3>USB Physical Passkey Generator</h3>
+      <p>A hardware security token that derives deterministic passwords from a master secret using HMAC — a physical key to a password vault that never stores the passwords themselves.</p>
+      <ul>
+        <li><strong>Deterministic HMAC generation</strong> — passwords derived from (secret &times; domain) so nothing sensitive is ever persisted on the device.</li>
+        <li><strong>USB form factor</strong> — self-contained token that types credentials directly, no host-side software trust required.</li>
+        <li><strong>Physical passkey</strong> — a tangible root-of-trust object for high-value accounts.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">HMAC</span>
+        <span class="tag">USB HID</span>
+        <span class="tag">Embedded</span>
+        <span class="tag">Cryptography</span>
+        <span class="tag">Hardware Token</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://rubino.io">rubino.io</a> &middot; <a href="index.html">back to projects</a>
+  </div>
+</div>
+</body>
+</html>

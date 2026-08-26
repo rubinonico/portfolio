@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance &amp; Quant — Nico Rubino</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --card: #1a1a1a;
+    --card-hover: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #e0e0e0;
+    --muted: #888;
+    --dim: #aaa;
+    --accent: #6ea8fe;
+    --accent-dim: rgba(110, 168, 254, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: color 0.15s ease;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .back-link::before { content: '\2190\00a0'; }
+
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); margin-top: 0.25rem; margin-bottom: 2.75rem; font-size: 0.95rem; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem 1.75rem 1.5rem;
+    margin: 1.25rem 0;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .project:hover {
+    border-color: var(--accent);
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+
+  .project-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .project h2 { font-size: 1.25rem; font-weight: 650; color: #fff; letter-spacing: -0.01em; }
+  .project-index {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .project .desc { color: var(--dim); font-size: 0.95rem; margin-bottom: 1.1rem; }
+
+  .tags { margin-bottom: 1.1rem; }
+  .tag {
+    display: inline-block;
+    background: #242424;
+    border: 1px solid #333;
+    color: #c0c0c0;
+    font-size: 0.72rem;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+    margin: 0 0.3rem 0.35rem 0;
+    letter-spacing: 0.01em;
+  }
+  .tag:hover { border-color: var(--accent); color: #fff; }
+
+  .results {
+    border-top: 1px solid var(--border);
+    padding-top: 0.9rem;
+  }
+  .results-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .results ul { list-style: none; }
+  .results li {
+    color: var(--dim);
+    font-size: 0.9rem;
+    padding-left: 1.1rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+  }
+  .results li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .results li strong { color: var(--text); font-weight: 600; }
+  .metric {
+    display: inline-block;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    padding: 0.1rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    margin-top: 3rem;
+    color: #555;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .footer a { color: #555; text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">Back to all projects</a>
+
+  <h1>Finance &amp; Quant</h1>
+  <p class="subtitle">systematic trading · DeFi research · on-chain liquidity engineering</p>
+
+  <!-- Project 1 -->
+  <div class="project">
+    <div class="project-header">
+      <h2>Multi-Strategy Systematic Trading Framework</h2>
+      <span class="project-index">01</span>
+    </div>
+    <p class="desc">
+      A modular systematic crypto trading architecture that fuses three independent signal families
+      into a single portfolio allocation layer. Graph Signal Processing extracts structure from
+      cross-asset correlation networks, a Temporal Convolutional Network captures momentum dynamics,
+      and a Hidden Markov Model segments the market into latent regimes to gate strategy exposure.
+      Signals are blended and risk-weighted before execution, with the entire pipeline evaluated
+      under strict walk-forward validation to avoid lookahead bias.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">NumPy</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">scikit-learn</span>
+      <span class="tag">hmmlearn</span>
+      <span class="tag">NetworkX</span>
+      <span class="tag">pandas</span>
+    </div>
+    <div class="results">
+      <div class="results-label">Key results</div>
+      <ul>
+        <li><span class="metric">2.49 Sharpe</span> on walk-forward out-of-sample evaluation</li>
+        <li>Regime detection via <strong>HMM</strong> dynamically reduces exposure in adverse states</li>
+        <li>Graph Signal Processing surfaces <strong>cross-asset</strong> lead-lag structure for signals</li>
+        <li>TCN momentum module outperforms baseline momentum on rolling re-fits</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project">
+    <div class="project-header">
+      <h2>DeFi Liquidity Provision Research</h2>
+      <span class="project-index">02</span>
+    </div>
+    <p class="desc">
+      A systematic investigation of concentrated liquidity provision on Uniswap V3. The study models
+      impermanent loss and fee accrual under realistic market conditions, using Heterogeneous
+      AutoRegressive (HAR) models for realized volatility forecasting and copula models to capture
+      the joint price dynamics of paired assets. The work culminates in a published negative result:
+      at retail scale, concentrated LP returns fail to compensate for impermanent loss and gas costs
+      relative to simply holding the underlying assets.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">pandas</span>
+      <span class="tag">NumPy</span>
+      <span class="tag">SciPy</span>
+      <span class="tag">statsmodels</span>
+      <span class="tag">web3.py</span>
+      <span class="tag">matplotlib</span>
+    </div>
+    <div class="results">
+      <div class="results-label">Key results</div>
+      <ul>
+        <li><strong>Published negative result</strong> — retail-scale LP underperforms buy-and-hold after fees &amp; IL</li>
+        <li>HAR volatility forecasts quantify optimal <strong>liquidity range widths</strong></li>
+        <li>Copula models reveal tail dependence that <strong>amplifies impermanent loss</strong> in drawdowns</li>
+        <li>On-chain fee &amp; position data pulled directly via <strong>web3.py</strong> for empirical grounding</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="project">
+    <div class="project-header">
+      <h2>LP Engine</h2>
+      <span class="project-index">03</span>
+    </div>
+    <p class="desc">
+      An on-chain liquidity engine built around BTC-collateralized borrowing. The system borrows
+      against BTC collateral to fund a delta-neutral WETH/USDC concentrated liquidity position,
+      with the directional risk of the LP neutralized through perpetual futures hedges. Position
+      sizing is driven by a ratio-volatility model that scales exposure to the realized volatility
+      spread between the LP's fee yield and the cost of the hedge, keeping the book delta-flat
+      while harvesting fee income.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">Solidity</span>
+      <span class="tag">web3.py</span>
+      <span class="tag">NumPy</span>
+      <span class="tag">pandas</span>
+      <span class="tag">ccxt</span>
+    </div>
+    <div class="results">
+      <div class="results-label">Key results</div>
+      <ul>
+        <li><strong>Delta-neutral</strong> WETH/USDC LP position with perpetual hedge overlay</li>
+        <li><strong>BTC-collateralized borrowing</strong> keeps capital efficiency high without selling the base asset</li>
+        <li>Ratio-volatility sizing adapts exposure to the <strong>fee-yield vs. hedge-cost spread</strong></li>
+        <li>Automated rebalancing &amp; hedge roll logic under continuous position monitoring</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://rubino.io">rubino.io</a> &middot; hosted on GitHub Pages
+  </div>
+</div>
+</body>
+</html>

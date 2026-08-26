@@ -3,47 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nico Rubino — Projects</title>
+<title>Nico Rubino — Projects & Portfolio</title>
 <style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1a1a1a;
+    --border: #222;
+    --text: #e0e0e0;
+    --text2: #888;
+    --accent: #6ea8fe;
+    --accent-dim: #3d6fa0;
+    --green: #4ade80;
+    --radius: 10px;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #e0e0e0; line-height: 1.6; }
-  .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
-  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; color: #fff; }
-  .subtitle { color: #888; margin-bottom: 2.5rem; font-size: 0.95rem; }
-  h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin: 2rem 0 0.5rem; border-bottom: 1px solid #222; padding-bottom: 0.5rem; }
-  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.25rem; margin: 0.75rem 0; }
-  .card a { color: #6ea8fe; text-decoration: none; font-weight: 500; }
-  .card a:hover { text-decoration: underline; }
-  .card p { color: #aaa; font-size: 0.9rem; margin-top: 0.4rem; }
-  .tag { display: inline-block; background: #2a2a2a; color: #999; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 4px; margin-right: 0.3rem; }
-  .footer { margin-top: 3rem; color: #555; font-size: 0.85rem; text-align: center; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(110,168,254,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(74,222,128,0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, #a0c4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .title {
+    font-size: 1.1rem;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+  }
+  .hero .bio {
+    font-size: 0.95rem;
+    color: var(--text2);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hero .bio strong { color: var(--text); }
+  .hero .cta {
+    margin-top: 2rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+  .hero .cta a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .hero .cta .primary {
+    background: var(--accent);
+    color: #000;
+  }
+  .hero .cta .primary:hover { background: #8ab8ff; transform: translateY(-1px); }
+  .hero .cta .secondary {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .hero .cta .secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: center; gap: 2rem;
+    padding: 0.8rem 1.5rem;
+    overflow-x: auto;
+  }
+  nav a {
+    color: var(--text2); text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; white-space: nowrap; transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* ── Sections ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 5rem 0; }
+  section:first-of-type { padding-top: 3rem; }
+  section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #fff;
+  }
+  section .subtitle {
+    color: var(--text2);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ── Project Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .card:hover {
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #fff;
+  }
+  .card .category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .card p {
+    font-size: 0.85rem;
+    color: var(--text2);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+  .card .tags {
+    display: flex; flex-wrap: wrap; gap: 0.3rem;
+  }
+  .card .tag {
+    display: inline-block;
+    background: var(--surface2);
+    color: var(--text2);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .card .tag.live { color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+  .card .link {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .card .link:hover { text-decoration: underline; }
+  .card .link-arrow { margin-left: 0.2rem; }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-cat h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .skill-cat ul {
+    list-style: none;
+  }
+  .skill-cat li {
+    font-size: 0.85rem;
+    color: var(--text2);
+    padding: 0.25rem 0;
+    position: relative;
+    padding-left: 1rem;
+  }
+  .skill-cat li::before {
+    content: '›';
+    position: absolute; left: 0;
+    color: var(--accent-dim);
+    font-weight: 700;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--text2);
+    font-size: 0.8rem;
+  }
+  footer a { color: var(--text2); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 2rem; }
+    .hero { min-height: 60vh; padding: 3rem 1.5rem; }
+    .grid { grid-template-columns: 1fr; }
+    nav .inner { gap: 1rem; justify-content: flex-start; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ─── Hero ─── -->
+<header class="hero">
+  <div class="hero-content">
+    <h1>Nico Rubino</h1>
+    <p class="title">Administrative Executive · Systems Builder · Independent Researcher</p>
+    <p class="bio">
+      I run operations for a single-physician neurology and hyperbaric clinic at <strong>NEXGEN Hyperbaric</strong> — 
+      managing the full administrative stack, building automation tools, and engineering better ways to work.
+      Outside the office I build things: poker engines, quantitative trading systems, chemical synthesis routes,
+      hardware prototypes, and security infrastructure. This is a living catalog of that work.
+    </p>
+    <div class="cta">
+      <a href="#projects" class="primary">Explore Projects ↓</a>
+      <a href="https://rubino.io" class="secondary" target="_blank">rubino.io →</a>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Nav ─── -->
+<nav>
+  <div class="inner">
+    <a href="#projects">Projects</a>
+    <a href="gaming.html">Gaming</a>
+    <a href="finance.html">Finance</a>
+    <a href="labs.html">Labs</a>
+    <a href="#skills">Skills</a>
+  </div>
+</nav>
+
 <div class="container">
-  <h1>Nico Rubino</h1>
-  <p class="subtitle">projects · tools · experiments</p>
 
-  <h2>Poker</h2>
-  <div class="card">
-    <a href="five-column-poker.html">Five Card Draw</a>
-    <span class="tag">JavaScript</span>
-    <p>Full Five Card Draw game — betting rounds, hand evaluation, AI opponents, built in vanilla JS.</p>
-  </div>
-  <div class="card">
-    <a href="holdem-scratch.html">Texas Hold'em (v1)</a>
-    <span class="tag">JavaScript</span>
-    <p>Hold'em simulation engine with hand ranking, pot odds, and probability calculations.</p>
-  </div>
-  <div class="card">
-    <a href="holdem-scratch-B.html">Texas Hold'em (v2)</a>
-    <span class="tag">JavaScript</span>
-    <p>Iterated Hold'em engine with refined UI, betting structures, and game-flow logic.</p>
-  </div>
+<!-- ─── Projects ─── -->
+<section id="projects">
+  <h2>Projects</h2>
+  <p class="subtitle">A cross-section of what I build — organized by domain.</p>
 
-  <div class="footer">
-    <a href="https://rubino.io" style="color:#555;">rubino.io</a> &middot; hosted on GitHub Pages
+  <div class="grid">
+
+    <!-- Gaming -->
+    <a href="gaming.html" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Gaming</div>
+      <h3>Poker Game Simulations</h3>
+      <p>Five Card Draw and Texas Hold'em engines built from scratch in vanilla JavaScript — hand evaluation, AI opponents, Monte Carlo simulation.</p>
+      <div class="tags">
+        <span class="tag live">🟢 Live Demo</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Game Theory</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
+    <!-- Finance -->
+    <a href="finance.html" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Finance · Quant</div>
+      <h3>Systematic Trading &amp; DeFi</h3>
+      <p>Multi-strategy systematic trading framework, DeFi liquidity provision research, and delta-neutral LP engine design — walk-forward validated.</p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">Quant</span>
+        <span class="tag">DeFi</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
+    <!-- Chemistry -->
+    <a href="labs.html" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Chemistry</div>
+      <h3>Process Chemistry &amp; Synthesis</h3>
+      <p>Multi-step organic synthesis route design, computational screening (DFT/ORCA), continuous-flow reactor architecture, and process evaluation.</p>
+      <div class="tags">
+        <span class="tag">DFT</span>
+        <span class="tag">ORCA</span>
+        <span class="tag">Flow Chemistry</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
+    <!-- Hardware -->
+    <a href="labs.html#hardware" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Hardware</div>
+      <h3>Distillation Analysis &amp; Homelab</h3>
+      <p>Multi-sensor distillation analysis system (White Mule) and Proxmox-based homelab with GPU compute, NAS, and distributed AI agent infrastructure.</p>
+      <div class="tags">
+        <span class="tag">Sensors</span>
+        <span class="tag">Proxmox</span>
+        <span class="tag">Self-Hosting</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
+    <!-- OPSEC -->
+    <a href="labs.html#opsec" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Security</div>
+      <h3>OPSEC &amp; Infrastructure</h3>
+      <p>Tiered threat model, encrypted communications architecture, financial privacy stack, and USB hardware passkey generator (Morgul/Silmaril).</p>
+      <div class="tags">
+        <span class="tag">Threat Modeling</span>
+        <span class="tag">Cryptography</span>
+        <span class="tag">Hardware</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
+    <!-- Tech Infrastructure -->
+    <a href="labs.html#infra" class="card" style="text-decoration:none;display:block;">
+      <div class="category">Technology</div>
+      <h3>Automation &amp; Knowledge Systems</h3>
+      <p>Healthcare automation framework, multi-agent orchestration infrastructure, personal knowledge architecture with hybrid retrieval.</p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">AI Agents</span>
+        <span class="tag">RAG</span>
+      </div>
+      <span class="link">View projects <span class="link-arrow">→</span></span>
+    </a>
+
   </div>
+</section>
+
+<!-- ─── Skills ─── -->
+<section id="skills">
+  <h2>Skills &amp; Tools</h2>
+  <p class="subtitle">Technologies and methods I work with across domains.</p>
+
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <h4>Programming</h4>
+      <ul>
+        <li>Python (NumPy, Pandas, PyTorch, scikit-learn)</li>
+        <li>JavaScript (vanilla, no frameworks)</li>
+        <li>SQL</li>
+        <li>Git, Docker</li>
+        <li>REST API Integration</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Quantitative</h4>
+      <ul>
+        <li>Walk-Forward Backtesting</li>
+        <li>Statistical Hypothesis Testing</li>
+        <li>Time Series Analysis (HAR, HMM)</li>
+        <li>Kelly Criterion / Optimal Sizing</li>
+        <li>Copula &amp; Cointegration Modeling</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Finance &amp; DeFi</h4>
+      <ul>
+        <li>Systematic Crypto Trading</li>
+        <li>Concentrated LP (Uniswap V3, Aerodrome)</li>
+        <li>Delta-Neutral Hedging</li>
+        <li>Portfolio Construction</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Chemistry</h4>
+      <ul>
+        <li>Multi-Step Organic Synthesis</li>
+        <li>DFT / Computational Chem (ORCA, GFN2-xTB)</li>
+        <li>Flow Chemistry &amp; Process Design</li>
+        <li>Route Evaluation &amp; Cost Analysis</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Hardware &amp; Infrastructure</h4>
+      <ul>
+        <li>Proxmox / Virtualization</li>
+        <li>NAS &amp; Self-Hosting</li>
+        <li>Sensor Integration &amp; Instrumentation</li>
+        <li>LLM Agent Orchestration</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Security &amp; OPSEC</h4>
+      <ul>
+        <li>Threat Modeling &amp; Risk Assessment</li>
+        <li>Encrypted Communications</li>
+        <li>Financial Privacy Architecture</li>
+        <li>Hardware Security (Morgul/Silmaril)</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Administrative</h4>
+      <ul>
+        <li>Executive / Administrative Support</li>
+        <li>Revenue Cycle Management</li>
+        <li>Workflow Automation (Python, APIs, OCR)</li>
+        <li>HIPAA Compliance</li>
+      </ul>
+    </div>
+    <div class="skill-cat">
+      <h4>Certifications</h4>
+      <ul>
+        <li>Google IT Support Professional</li>
+        <li>QuickBooks ProAdvisor (in progress)</li>
+        <li>BS Accounting, WGU (in progress)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 </div>
+
+<footer>
+  <p>
+    <a href="https://rubino.io">rubino.io</a>
+    &nbsp;·&nbsp; <a href="https://github.com/rubinonico">GitHub</a>
+    &nbsp;·&nbsp; <a href="https://linkedin.com/in/nicorubino">LinkedIn</a>
+    &nbsp;·&nbsp; hosted on GitHub Pages
+  </p>
+</footer>
+
 </body>
 </html>
