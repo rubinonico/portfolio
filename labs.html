@@ -201,15 +201,17 @@
 
     <div class="card">
       <h3>Healthcare Automation Framework</h3>
-      <p>Python-based OCR-to-routing pipeline for medical records processing. Integrates EHR API, ePA webhooks, and fax ingestion.</p>
+      <p>Python automation for a neurology practice. First project: <strong>eforce_automator.py</strong> — Selenium script that logs into Florida PMP AWARE, batch-downloads patient PDMP reports, and renames them by patient name. Built to replace a manual daily workflow.</p>
       <ul>
-        <li>Reduced records processing from days to same-day</li>
-        <li>HIPAA-compliant PHI boundary enforcement</li>
+        <li>Selenium + PyMuPDF, headless or visible</li>
+        <li>Auto-retry for failed downloads</li>
+        <li>Renames RxReport*.pdf → LastName,FirstName.pdf</li>
       </ul>
       <div class="tags">
         <span class="tag">Python</span>
-        <span class="tag">OCR</span>
+        <span class="tag">Selenium</span>
         <span class="tag">Automation</span>
+        <span class="tag">PDF</span>
       </div>
     </div>
 
