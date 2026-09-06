@@ -3,618 +3,642 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nico Rubino — Terminal</title>
+<title>Nico Rubino — Deal Me In</title>
 <style>
-  /* ── CRT Terminal Theme (Balatro/Fallout inspired) ── */
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;700&display=swap');
-
-  :root {
-    --crt-green: #00ff41;
-    --crt-green-dim: #00aa28;
-    --crt-amber: #ffb000;
-    --crt-bg: #0a0f0a;
-    --crt-screen: #0d1a0d;
-    --crt-border: #1a3a1a;
-    --crt-text: #b0ffb0;
-    --crt-text-dim: #4a8a4a;
-    --crt-highlight: #00ff41;
-    --crt-red: #ff3355;
-    --crt-blue: #4488ff;
-    --crt-scanline: rgba(0, 255, 65, 0.03);
-  }
+  /* ── Base ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #050805;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #1a1208;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
     padding: 1rem;
+    overflow-x: hidden;
   }
 
-  /* ── CRT Monitor Frame ── */
-  .monitor {
-    background: #111;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 0 60px rgba(0, 255, 65, 0.05), inset 0 0 40px rgba(0,0,0,0.8);
-    max-width: 900px;
+  /* ── Table ── */
+  .table {
     width: 100%;
-    border: 2px solid #222;
+    max-width: 1100px;
+    background: radial-gradient(ellipse at 50% 40%, #1e6b3a 0%, #14522a 40%, #0d3a1d 100%);
+    border-radius: 60px 60px 40px 40px;
+    padding: 2.5rem 2rem 3rem;
     position: relative;
+    box-shadow:
+      0 0 0 12px #3a1f0d,
+      0 0 0 14px #2a1508,
+      inset 0 0 80px rgba(0,0,0,0.3);
+    min-height: 600px;
   }
 
-  .monitor::before {
+  /* ── Wood grain border ── */
+  .table::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(0,255,65,0.02) 0%, transparent 30%, transparent 70%, rgba(0,255,65,0.02) 100%);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .screen {
-    background: var(--crt-screen);
-    border-radius: 12px;
-    padding: 2rem;
-    min-height: 500px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--crt-border);
-    box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
-  }
-
-  /* ── Scanlines ── */
-  .screen::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: -16px; left: -16px; right: -16px; bottom: -16px;
+    border-radius: 72px;
     background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      var(--crt-scanline) 2px,
-      var(--crt-scanline) 4px
+      90deg,
+      #3a1f0d 0px, #4a2a10 2px, #3a1f0d 4px, #2c1808 6px, #3a1f0d 8px
     );
-    pointer-events: none;
-    z-index: 10;
+    z-index: -1;
   }
 
-  /* ── Screen Glow ── */
-  .screen::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%);
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  /* ── Terminal Content ── */
-  .terminal {
-    position: relative;
-    z-index: 3;
-    color: var(--crt-text);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .terminal .header {
+  /* ── Dealer ── */
+  .dealer {
     text-align: center;
     margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--crt-border);
+    position: relative;
   }
 
-  .terminal .header h1 {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 1.2rem;
-    color: var(--crt-green);
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  .dealer .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4a76a, #b8894a);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2a1508;
     margin-bottom: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .dealer .speech-bubble {
+    display: inline-block;
+    background: #f5f0e8;
+    color: #2a1508;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px 20px 20px 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    max-width: 360px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: opacity 0.3s;
+    line-height: 1.4;
+  }
+
+  .dealer .speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #f5f0e8;
+  }
+
+  /* ── Cards Container ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+    perspective: 1200px;
+  }
+
+  /* ── Card ── */
+  .card {
+    aspect-ratio: 5 / 7;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+    min-height: 160px;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg) translateY(-4px);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.9rem;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+
+  /* ── Card Back ── */
+  .card-back {
+    background: linear-gradient(135deg, #1a3068, #0d1f4a);
+    align-items: center;
+    justify-content: center;
+    border-color: #2a4580;
+  }
+
+  .card-back .monogram {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #c9a84c;
+    text-shadow: 0 0 20px rgba(201,168,76,0.3);
     letter-spacing: 2px;
   }
 
-  .terminal .header .subtitle {
-    color: var(--crt-text-dim);
-    font-size: 0.75rem;
-    font-family: 'Press Start 2P', monospace;
-    letter-spacing: 1px;
+  .card-back .suit {
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+    opacity: 0.6;
   }
 
-  .terminal .status-bar {
+  .card-back .pattern {
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 6px;
+  }
+
+  .card-back .pattern::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 4px;
+  }
+
+  /* ── Card Front ── */
+  .card-front {
+    background: #faf7f0;
+    transform: rotateY(180deg);
+    color: #1a1a1a;
+    border-color: #d4c9b0;
+    justify-content: flex-start;
+  }
+
+  .card-front .card-header {
     display: flex;
     justify-content: space-between;
-    color: var(--crt-text-dim);
-    font-size: 0.7rem;
-    margin-bottom: 1rem;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--crt-border);
-    background: rgba(0,0,0,0.3);
-  }
-
-  .terminal .status-bar .blink {
-    animation: blink 1s step-end infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  .terminal .prompt-line {
-    color: var(--crt-green);
-    margin-bottom: 0.75rem;
-  }
-
-  .terminal .prompt-line .prompt {
-    color: var(--crt-green);
-  }
-
-  .terminal .prompt-line .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background: var(--crt-green);
-    animation: blink 1s step-end infinite;
-    vertical-align: text-bottom;
-    margin-left: 2px;
-  }
-
-  /* ── Menu Items ── */
-  .menu {
-    margin: 1rem 0;
-  }
-
-  .menu-item {
-    display: flex;
     align-items: center;
-    padding: 0.4rem 0.5rem;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--crt-text-dim);
-    text-decoration: none;
+    margin-bottom: 0.4rem;
   }
 
-  .menu-item:hover {
-    background: rgba(0, 255, 65, 0.05);
-    color: var(--crt-green);
+  .card-front .card-suit {
+    font-size: 0.85rem;
   }
 
-  .menu-item .arrow {
-    color: var(--crt-green-dim);
-    margin-right: 0.75rem;
-    font-size: 0.8rem;
-    width: 1.2rem;
+  .card-front .card-label {
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    font-weight: 600;
   }
 
-  .menu-item .title {
+  .card-front .card-rank {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    color: #666;
+  }
+
+  .card-front h3 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+    color: #1a1a1a;
+  }
+
+  .card-front ul {
+    list-style: none;
     flex: 1;
   }
 
-  .menu-item .badge {
-    font-size: 0.65rem;
-    padding: 0.1rem 0.4rem;
-    border: 1px solid var(--crt-border);
-    color: var(--crt-text-dim);
-  }
-
-  .menu-item .badge.live {
-    border-color: var(--crt-green-dim);
-    color: var(--crt-green);
-  }
-
-  .menu-item.active {
-    background: rgba(0, 255, 65, 0.08);
-    color: var(--crt-green);
-  }
-
-  .menu-item.active .arrow {
-    color: var(--crt-green);
-  }
-
-  /* ── Content Panel ── */
-  .content-panel {
-    margin-top: 1rem;
-    padding: 1rem;
-    border: 1px solid var(--crt-border);
-    background: rgba(0,0,0,0.3);
-    min-height: 120px;
-  }
-
-  .content-panel h3 {
-    color: var(--crt-green);
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .content-panel .section-label {
-    color: var(--crt-text-dim);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.25rem;
-  }
-
-  .content-panel .bullet {
-    color: var(--crt-text);
-    font-size: 0.8rem;
-    padding: 0.15rem 0;
-    padding-left: 1rem;
+  .card-front li {
+    font-size: 0.55rem;
+    color: #555;
+    padding: 0.08rem 0;
+    padding-left: 0.5rem;
     position: relative;
+    line-height: 1.3;
   }
 
-  .content-panel .bullet::before {
-    content: '>';
+  .card-front li::before {
+    content: '♠';
     position: absolute;
     left: 0;
-    color: var(--crt-green-dim);
+    font-size: 0.4rem;
+    color: #aaa;
   }
 
-  .content-panel .skill-tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    padding: 0.1rem 0.5rem;
-    margin: 0.15rem;
-    border: 1px solid var(--crt-border);
-    color: var(--crt-text);
-  }
-
-  .content-panel .skill-tag.highlight {
-    border-color: var(--crt-green-dim);
-    color: var(--crt-green);
-  }
-
-  /* ── Footer ── */
-  .terminal .footer {
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--crt-border);
-    font-size: 0.7rem;
-    color: var(--crt-text-dim);
-    text-align: center;
-  }
-
-  .terminal .footer a {
-    color: var(--crt-text-dim);
+  .card-front .card-link {
+    margin-top: auto;
+    font-size: 0.5rem;
+    color: #2a4580;
     text-decoration: none;
+    font-weight: 600;
+    padding-top: 0.3rem;
+    border-top: 1px solid #eee;
   }
 
-  .terminal .footer a:hover {
-    color: var(--crt-green);
+  .card-front .card-link:hover {
+    text-decoration: underline;
   }
 
-  /* ── Help text ── */
-  .help-text {
+  /* ── Joker special ── */
+  .card.joker .card-back {
+    background: linear-gradient(135deg, #4a1a30, #2a0d1f);
+    border-color: #80306a;
+  }
+
+  .card.joker .card-back .monogram {
+    color: #c84a8a;
+    text-shadow: 0 0 20px rgba(200,74,138,0.3);
+  }
+
+  .card.joker .card-back .suit {
+    content: '🃏';
+  }
+
+  .card.joker .card-front {
+    background: linear-gradient(135deg, #faf0f5, #f5e8f0);
+  }
+
+  .card.joker.flipped .card-front .card-header .card-suit {
+    font-size: 1.2rem;
+  }
+
+  /* ── Suit colors ── */
+  .card.suit-red .card-front .card-suit,
+  .card.suit-red .card-front li::before {
+    color: #cc2233;
+  }
+
+  /* ── Shuffle button ── */
+  .table-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-shuffle {
+    background: rgba(255,255,255,0.1);
+    color: #b0d0b0;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .btn-shuffle:hover {
+    background: rgba(255,255,255,0.18);
+    color: #d0e8d0;
+  }
+
+  .btn-resume {
+    background: #c9a84c;
+    color: #1a1208;
+  }
+
+  .btn-resume:hover {
+    background: #d4b85c;
+    transform: translateY(-1px);
+  }
+
+  .btn-resume:active {
+    transform: translateY(0);
+  }
+
+  .btn-nav {
+    background: rgba(255,255,255,0.06);
+    color: #8aaa8a;
+    border: 1px solid rgba(255,255,255,0.08);
     font-size: 0.7rem;
-    color: var(--crt-text-dim);
-    text-align: center;
-    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
   }
 
-  .help-text kbd {
-    border: 1px solid var(--crt-border);
-    padding: 0.05rem 0.3rem;
-    font-size: 0.65rem;
-    color: var(--crt-text);
+  .btn-nav:hover {
+    background: rgba(255,255,255,0.12);
+    color: #b0d0b0;
   }
 
   /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .monitor { padding: 12px; }
-    .screen { padding: 1rem; }
-    .terminal { font-size: 12px; }
-    .terminal .header h1 { font-size: 0.9rem; }
+  @media (max-width: 700px) {
+    .table {
+      padding: 1.5rem 1rem 2rem;
+      border-radius: 30px;
+      min-height: auto;
+    }
+    .table::before { border-radius: 42px; }
+    .card-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+    .card { min-height: 140px; }
+    .card-face { padding: 0.6rem; }
+    .card-front h3 { font-size: 0.6rem; }
+    .card-front li { font-size: 0.48rem; }
+    .dealer .speech-bubble { font-size: 0.75rem; max-width: 260px; }
+  }
+
+  @media (max-width: 450px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .card { min-height: 120px; }
   }
 </style>
 </head>
 <body>
 
-<div class="monitor">
-  <div class="screen">
-    <div class="terminal" id="terminal">
+<div class="table">
 
-      <div class="header">
-        <h1>NICO RUBINO</h1>
-        <div class="subtitle">ACCOUNTING &middot; OPERATIONS &middot; SYSTEMS</div>
-      </div>
-
-      <div class="status-bar">
-        <span>TERMINAL v2.4</span>
-        <span>STATUS: <span style="color:var(--crt-green)">ACTIVE</span></span>
-        <span class="blink">&#x25CF;</span>
-      </div>
-
-      <div class="prompt-line" id="prompt-line">
-        <span class="prompt">STP$&nbsp;</span>
-        <span id="typed-text"></span>
-        <span class="cursor"></span>
-      </div>
-
-      <div class="menu" id="menu">
-        <a class="menu-item active" data-section="about" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">About Me</span>
-          <span class="badge">INFO</span>
-        </a>
-        <a class="menu-item" data-section="experience" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">Experience</span>
-          <span class="badge">MAIN</span>
-        </a>
-        <a class="menu-item" data-section="education" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">Education</span>
-          <span class="badge">CERT</span>
-        </a>
-        <a class="menu-item" data-section="skills" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">Skills</span>
-          <span class="badge">COMP</span>
-        </a>
-        <a class="menu-item" data-section="projects" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">Projects</span>
-          <span class="badge">PORTFOLIO</span>
-        </a>
-        <a class="menu-item" data-section="contact" href="javascript:void(0)">
-          <span class="arrow">&#x25B6;</span>
-          <span class="title">Contact</span>
-          <span class="badge">LINK</span>
-        </a>
-      </div>
-
-      <div class="content-panel" id="content">
-        <h3 id="content-title">ABOUT ME</h3>
-        <div id="content-body">
-          <div class="section-label">LOADING...</div>
-        </div>
-      </div>
-
-      <div class="help-text">
-        <kbd>&uarr;</kbd> <kbd>&darr;</kbd> navigate &middot; <kbd>Enter</kbd> select &middot; <kbd>1</kbd>-<kbd>6</kbd> quick jump
-      </div>
-
-      <div class="footer">
-        <a href="https://rubino.io">rubino.io</a> &middot;
-        <a href="https://github.com/rubinonico">GitHub</a> &middot;
-        <a href="https://rubinonico.github.io/portfolio/gaming.html">Poker</a>
-      </div>
-
-    </div>
+  <div class="dealer">
+    <div class="avatar">N</div>
+    <div class="speech-bubble" id="speech">Click a card to flip it. I'll show you mine if you show me yours.</div>
   </div>
+
+  <div class="card-grid" id="cardGrid">
+    <!-- Cards rendered by JS -->
+  </div>
+
+  <div class="table-footer">
+    <button class="btn btn-shuffle" onclick="shuffleCards()">♠ Shuffle</button>
+    <button class="btn btn-resume" onclick="downloadResume()">📄 Download Resume</button>
+    <a href="gaming.html" class="btn btn-nav">♠ Poker</a>
+    <a href="finance.html" class="btn btn-nav">♦ Finance</a>
+    <a href="labs.html" class="btn btn-nav">♣ Labs</a>
+  </div>
+
 </div>
 
 <script>
-// ── Data ──
-const data = {
-  about: {
-    title: 'ABOUT ME',
-    body: [
-      { type: 'label', text: 'PROFILE' },
-      { type: 'text', text: 'Practice operations and compliance professional transitioning to the Tampa Bay area. Currently pursuing a B.S. in Accounting at WGU.' },
-      { type: 'text', text: 'Background spans healthcare regulatory compliance (DEA, HIPAA, payer), systematic quantitative research, and automation infrastructure.' },
-      { type: 'blank' },
-      { type: 'label', text: 'LOCATION' },
-      { type: 'text', text: 'Naples, FL relocating to St. Petersburg, FL (Q4 2026)' },
-      { type: 'blank' }
-    ]
+// ── Card Data ──
+const CARD_DATA = [
+  {
+    id: 'work',
+    rank: 'A',
+    suit: '♠',
+    suitColor: 'black',
+    title: 'Experience',
+    backMonogram: 'NR',
+    bullets: [
+      'DEA controlled substance compliance & UDS programs',
+      'Prior authorization & step therapy verification',
+      'Python automation for medical records processing',
+      'Legal correspondence & entity documentation',
+      'Office operations & vendor management',
+    ],
+    link: '#',
+    linkText: 'Full resume →',
   },
-  experience: {
-    title: 'EXPERIENCE',
-    body: [
-      { type: 'label', text: 'PRACTICE OPERATIONS & TECHNOLOGY ASSOCIATE' },
-      { type: 'text', text: 'Mark P. Rubino MD, LLC  |  Naples, FL  |  2023 \u2013 Present' },
-      { type: 'blank' },
-      { type: 'bullet', text: 'Enforce federal DEA controlled substance compliance: UDS screening, documentation, and physician adherence to prescribing guidelines.' },
-      { type: 'bullet', text: 'Verify step therapy and prior authorization compliance against payer-specific coverage criteria before submission.' },
-      { type: 'bullet', text: 'Submit UDS lab results and compliance documentation as supporting evidence in prior authorization packages.' },
-      { type: 'bullet', text: 'Manage prior authorization workflows for chronic migraine therapeutics across commercial and Medicare Advantage payers.' },
-      { type: 'bullet', text: 'Built Python automation framework for medical records processing and prior authorization pipeline management.' },
-      { type: 'bullet', text: 'Drafted formal legal correspondence including demand letters and entity formation documents.' },
-      { type: 'blank' },
-      { type: 'label', text: 'LEADERSHIP' },
-      { type: 'text', text: 'Assistant Scoutmaster  |  Troop 165, Naples, FL  |  2024 \u2013 Present' },
-      { type: 'bullet', text: 'Mentor youth in leadership development, civic responsibility, and wilderness preparedness.' },
-      { type: 'bullet', text: 'Plan and execute service projects, camping expeditions, and merit badge instruction.' },
-      { type: 'blank' },
-      { type: 'label', text: 'PHILMONT SCOUT RANCH' },
-      { type: 'text', text: 'Expedition Participant  |  Cimarron, NM' },
-      { type: 'bullet', text: '12-day backcountry trek across Philmont\u2019s 140,000-acre wilderness: navigation, resource management, and crew leadership in a high-adventure environment.' },
-      { type: 'blank' },
-      { type: 'label', text: 'WHOLE FOODS MARKET' },
-      { type: 'text', text: 'Chef de Partie  |  Naples, FL  |  2021 \u2013 2023' },
-      { type: 'bullet', text: 'High-volume prepared food production in USDA/FDA-regulated commercial kitchen environment.' },
-    ]
+  {
+    id: 'projects',
+    rank: 'K',
+    suit: '♥',
+    suitColor: 'red',
+    title: 'Projects',
+    backMonogram: 'NR',
+    bullets: [
+      'Poker engines: Five Card Draw, Texas Hold\'em',
+      'Systematic quant research framework (Python)',
+      'Healthcare automation: OCR, API, pipeline',
+      'Multi-sensor instrumentation system',
+      'USB hardware security key',
+    ],
+    link: 'gaming.html',
+    linkText: 'Play poker →',
   },
-  education: {
-    title: 'EDUCATION',
-    body: [
-      { type: 'label', text: 'WESTERN GOVERNORS UNIVERSITY' },
-      { type: 'text', text: 'B.S. Accounting (In Progress)  |  Expected Fall 2026' },
-      { type: 'blank' },
-      { type: 'label', text: 'COURSEWORK' },
-      { type: 'bullet', text: 'Financial Accounting' },
-      { type: 'bullet', text: 'Managerial Accounting' },
-      { type: 'bullet', text: 'Federal Taxation' },
-      { type: 'bullet', text: 'Business Law' },
-      { type: 'bullet', text: 'Corporate Finance' },
-      { type: 'bullet', text: 'Data Management' },
-      { type: 'blank' },
-      { type: 'label', text: 'CERTIFICATIONS' },
-      { type: 'bullet', text: 'Google IT Support Professional Certificate (completed)' },
-      { type: 'bullet', text: 'QuickBooks ProAdvisor (in-progress)' },
-    ]
+  {
+    id: 'finance',
+    rank: 'Q',
+    suit: '♦',
+    suitColor: 'red',
+    title: 'Quant Research',
+    backMonogram: 'NR',
+    bullets: [
+      'Walk-forward validation with kill gates',
+      'HMM regime detection & spectral analysis',
+      'Kelly position sizing & copula risk models',
+      'Concentrated liquidity research',
+      '50+ pages technical documentation',
+    ],
+    link: 'finance.html',
+    linkText: 'View research →',
   },
-  skills: {
-    title: 'SKILLS',
-    body: [
-      { type: 'label', text: 'REGULATORY & COMPLIANCE' },
-      { type: 'tags', tags: ['DEA Compliance', 'HIPAA Compliance', 'Risk Management', 'Prior Authorization', 'Step Therapy'] },
-      { type: 'blank' },
-      { type: 'label', text: 'PROGRAMMING & TOOLS' },
-      { type: 'tags', tags: ['Python', 'SQL', 'JavaScript', 'Git', 'Docker', 'REST APIs'] },
-      { type: 'blank' },
-      { type: 'label', text: 'QUANTITATIVE' },
-      { type: 'tags', tags: ['Walk-Forward Backtesting', 'Time Series Analysis', 'Risk Modeling', 'Statistical Modeling'] },
-      { type: 'blank' },
-      { type: 'label', text: 'OPERATIONS' },
-      { type: 'tags', tags: ['Executive Support', 'Revenue Cycle Management', 'Workflow Automation', 'Vendor Management'] },
-      { type: 'blank' },
-      { type: 'label', text: 'HARDWARE' },
-      { type: 'tags', tags: ['Sensor Integration', 'Proxmox / Self-Hosting', 'Embedded Systems', 'USB Hardware'] },
-    ]
+  {
+    id: 'labs',
+    rank: 'J',
+    suit: '♣',
+    suitColor: 'black',
+    title: 'Hardware',
+    backMonogram: 'NR',
+    bullets: [
+      'Multi-sensor distillation analysis system',
+      'Proxmox homelab: NAS, GPU, containers',
+      'USB-based hardware security key',
+      'Distributed AI agent infrastructure',
+      'Sub-$100 BOM sensor fusion',
+    ],
+    link: 'labs.html',
+    linkText: 'See builds →',
   },
-  projects: {
-    title: 'PROJECTS',
-    body: [
-      { type: 'label', text: 'SYSTEMATIC QUANTITATIVE RESEARCH' },
-      { type: 'bullet', text: 'Python-based research framework: data ingestion, signal computation, statistical validation across multiple asset classes.' },
-      { type: 'bullet', text: 'Statistical methods: HMM regime detection, spectral graph mapping, HAR/Hurst volatility dynamics.' },
-      { type: 'bullet', text: 'Walk-forward validation with embargo periods and phased kill gates.' },
-      { type: 'bullet', text: '50+ pages of technical documentation under version control.' },
-      { type: 'blank' },
-      { type: 'label', text: 'HEALTHCARE AUTOMATION FRAMEWORK' },
-      { type: 'bullet', text: 'OCR-to-classification-to-routing pipeline integrating AthenaOne REST API and CoverMyMeds ePA webhooks.' },
-      { type: 'bullet', text: 'HIPAA-compliant architecture with PHI boundary enforcement at the data-routing layer.' },
-      { type: 'blank' },
-      { type: 'label', text: 'POKER ENGINES (Live Demo)' },
-      { type: 'bullet', text: 'Five Card Draw and Texas Hold\'em in vanilla JavaScript. Hand evaluation, AI opponents, Monte Carlo simulation.' },
-      { type: 'text', text: '> Play at: rubinonico.github.io/portfolio/gaming.html', extra_class: 'highlight' },
-      { type: 'blank' },
-      { type: 'label', text: 'MULTI-SENSOR INSTRUMENTATION SYSTEM' },
-      { type: 'bullet', text: 'Low-cost fusion system (refractive index, temperature, conductivity) for real-time process analysis.' },
-      { type: 'blank' },
-      { type: 'label', text: 'USB HARDWARE SECURITY KEY' },
-      { type: 'bullet', text: 'Plug-in authenticator. Deterministic credential generation from a seed. No stored secrets on host.' },
-    ]
+  {
+    id: 'about',
+    rank: '★',
+    suit: '🃏',
+    suitColor: 'joker',
+    title: 'About Me',
+    backMonogram: 'NR',
+    isJoker: true,
+    bullets: [
+      'Practice ops & compliance professional',
+      'B.S. Accounting @ WGU (in progress)',
+      'Relocating to St. Petersburg, FL (Q4 2026)',
+      'Assistant Scoutmaster, Troop 165',
+      'Autodidact. Builder. Spreadsheet enjoyer.',
+    ],
+    link: '#',
+    linkText: 'The man behind the cards →',
   },
-  contact: {
-    title: 'CONTACT',
-    body: [
-      { type: 'label', text: 'EMAIL' },
-      { type: 'text', text: 'rubinonico.jobs@gmail.com' },
-      { type: 'blank' },
-      { type: 'label', text: 'PHONE' },
-      { type: 'text', text: '239-227-3823' },
-      { type: 'blank' },
-      { type: 'label', text: 'WEB' },
-      { type: 'text', text: 'rubinonico.github.io/portfolio' },
-      { type: 'blank' },
-      { type: 'label', text: 'GITHUB' },
-      { type: 'text', text: 'github.com/rubinonico' },
-      { type: 'blank' },
-      { type: 'label', text: 'STATUS' },
-      { type: 'text', text: 'Relocating to St. Petersburg, FL (Q4 2026).', extra_class: 'highlight' },
-    ]
-  }
-};
+  {
+    id: 'contact',
+    rank: 'A',
+    suit: '♣',
+    suitColor: 'black',
+    title: 'Contact',
+    backMonogram: 'NR',
+    bullets: [
+      'rubinonico.jobs@gmail.com',
+      '239-227-3823',
+      'github.com/rubinonico',
+      'rubinonico.github.io/portfolio',
+      'St. Petersburg, FL (relocating Q4 2026)',
+    ],
+    link: '#',
+    linkText: 'rubino.io →',
+  },
+];
+
+// ── One-liners ──
+const ONE_LINERS = [
+  'Click a card to flip it. I\'ll show you mine if you show me yours.',
+  'I automate spreadsheets so you don\'t have to.',
+  'Accounting degree: in progress. Snacks: also in progress.',
+  'I make operations boring. In the good way.',
+  'I reverse-engineered a career. It\'s still compiling.',
+  'Built a poker engine before I built a retirement plan. Priorities.',
+  'DEA compliance by day. Poker engines by night. No, I will not explain.',
+  'I once debugged a Python script for 8 hours. It was a missing comma. Worth it.',
+  'My resume is a hand of cards. I\'m showing you my best one.',
+  'Relocating to St. Pete. Bringing spreadsheets.',
+  'QuickBooks ProAdvisor (in progress). Life: also in progress.',
+  'I\'m not a regular accountant. I\'m a cool accountant. (This is a lie.)',
+];
 
 // ── State ──
-let currentSection = 'about';
-const sections = ['about', 'experience', 'education', 'skills', 'projects', 'contact'];
+let flippedCards = new Set();
 
-// ── Render ──
-function renderContent(section) {
-  const d = data[section];
-  if (!d) return;
+// ── Render Cards ──
+function renderCards() {
+  const grid = document.getElementById('cardGrid');
+  grid.innerHTML = '';
 
-  document.getElementById('content-title').textContent = d.title;
+  CARD_DATA.forEach((data, idx) => {
+    const card = document.createElement('div');
+    card.className = `card ${data.isJoker ? 'joker' : ''} ${data.suitColor === 'red' ? 'suit-red' : ''}`;
+    card.dataset.idx = idx;
+    card.onclick = () => flipCard(card, idx);
 
-  let html = '';
-  for (const item of d.body) {
-    if (item.type === 'label') {
-      html += `<div class="section-label">${item.text}</div>`;
-    } else if (item.type === 'text') {
-      const cls = item.extra_class ? ` class="${item.extra_class}"` : '';
-      html += `<div class="bullet"${cls}>${item.text}</div>`;
-    } else if (item.type === 'bullet') {
-      html += `<div class="bullet">${item.text}</div>`;
-    } else if (item.type === 'tags') {
-      html += `<div>${item.tags.map(t => `<span class="skill-tag highlight">${t}</span>`).join('')}</div>`;
-    } else if (item.type === 'blank') {
-      html += `<br>`;
+    // Back face
+    const back = document.createElement('div');
+    back.className = 'card-face card-back';
+    back.innerHTML = `
+      <div class="pattern"></div>
+      <div class="monogram">${data.backMonogram}</div>
+      <div class="suit">${data.isJoker ? '🃏' : data.suit}</div>
+    `;
+
+    // Front face
+    const front = document.createElement('div');
+    front.className = 'card-face card-front';
+    front.innerHTML = `
+      <div class="card-header">
+        <span class="card-suit">${data.suit}</span>
+        <span class="card-label">${data.title}</span>
+        <span class="card-rank">${data.rank}</span>
+      </div>
+      <h3>${data.title}</h3>
+      <ul>
+        ${data.bullets.map(b => `<li>${b}</li>`).join('')}
+      </ul>
+      <a href="${data.link}" class="card-link" onclick="event.stopPropagation()">${data.linkText}</a>
+    `;
+
+    card.appendChild(back);
+    card.appendChild(front);
+    grid.appendChild(card);
+  });
+}
+
+// ── Flip Card ──
+function flipCard(card, idx) {
+  const isFlipped = card.classList.contains('flipped');
+
+  if (isFlipped) {
+    card.classList.remove('flipped');
+    flippedCards.delete(idx);
+  } else {
+    card.classList.add('flipped');
+    flippedCards.add(idx);
+    // Joker flourish
+    if (CARD_DATA[idx].isJoker) {
+      card.style.transition = 'transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+      setTimeout(() => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
+      }, 600);
     }
   }
-  document.getElementById('content-body').innerHTML = html;
 
-  // Update menu active state
-  document.querySelectorAll('.menu-item').forEach(el => {
-    el.classList.toggle('active', el.dataset.section === section);
-  });
-
-  currentSection = section;
+  updateSpeech(idx);
 }
 
-// ── Navigation ──
-function navigateTo(idx) {
-  if (idx >= 0 && idx < sections.length) {
-    renderContent(sections[idx]);
+// ── Speech Bubble ──
+function updateSpeech(idx) {
+  const el = document.getElementById('speech');
+  if (!idx !== undefined && CARD_DATA[idx]) {
+    const name = CARD_DATA[idx].title;
+    const lines = [
+      `Ah, the ${name} card. Good choice.`,
+      `The ${name} section. This is where I shine. Or at least glimmer.`,
+      `You picked ${name}. I respect that.`,
+      `${name}. Let me tell you about it.`,
+      `The ${name} card. A personal favorite.`,
+    ];
+    el.textContent = lines[Math.floor(Math.random() * lines.length)];
+    el.style.opacity = 0;
+    setTimeout(() => { el.style.opacity = 1; }, 50);
+  } else {
+    el.textContent = ONE_LINERS[Math.floor(Math.random() * ONE_LINERS.length)];
+    el.style.opacity = 0;
+    setTimeout(() => { el.style.opacity = 1; }, 50);
   }
 }
 
-function navigateRelative(dir) {
-  const idx = sections.indexOf(currentSection);
-  navigateTo(idx + dir);
-}
+// ── Shuffle ──
+function shuffleCards() {
+  // Unflip all
+  document.querySelectorAll('.card.flipped').forEach(c => c.classList.remove('flipped'));
+  flippedCards.clear();
 
-// ── Keyboard ──
-document.addEventListener('keydown', (e) => {
-  const idx = sections.indexOf(currentSection);
-
-  if (e.key === 'ArrowDown' || e.key === 'j') {
-    e.preventDefault();
-    navigateRelative(1);
-  } else if (e.key === 'ArrowUp' || e.key === 'k') {
-    e.preventDefault();
-    navigateRelative(-1);
-  } else if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    // Just re-render current (acts as "select")
-    renderContent(currentSection);
-  } else if (e.key >= '1' && e.key <= '6') {
-    navigateTo(parseInt(e.key) - 1);
+  // Shuffle positions
+  const grid = document.getElementById('cardGrid');
+  const cards = Array.from(grid.children);
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    grid.appendChild(cards[j]); // moves it to end
   }
-});
 
-// ── Click handlers ──
-document.querySelectorAll('.menu-item').forEach(el => {
-  el.addEventListener('click', () => {
-    renderContent(el.dataset.section);
-  });
-});
-
-// ── Typewriter effect on load ──
-function typewriter(element, text, speed = 30) {
-  return new Promise(resolve => {
-    let i = 0;
-    element.textContent = '';
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(interval);
-        resolve();
-      }
-    }, speed);
-  });
+  updateSpeech();
 }
 
-async function init() {
-  const typedEl = document.getElementById('typed-text');
-  await typewriter(typedEl, 'cat resume.txt', 40);
-  await new Promise(r => setTimeout(r, 400));
-  renderContent('about');
+// ── Download Resume ──
+function downloadResume() {
+  // Link to the rj_tax_reporting_associate resume as a download
+  // Since we don't have a PDF, we'll link to the contact section
+  document.querySelectorAll('.card')[5]?.click();
+  updateSpeech();
+  const el = document.getElementById('speech');
+  el.textContent = 'Email me at rubinonico.jobs@gmail.com and I\'ll send the full resume.';
 }
 
-init();
+// ── Auto-rotate speech every 12s ──
+setInterval(() => {
+  if (flippedCards.size === 0) {
+    updateSpeech();
+  }
+}, 12000);
+
+// ── Init ──
+renderCards();
+updateSpeech();
 </script>
 </body>
 </html>
