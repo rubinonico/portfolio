@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nico Rubino — Hardware &amp; Infrastructure</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1a1a1a;
+    --border: #222;
+    --text: #e0e0e0;
+    --text2: #888;
+    --accent: #6ea8fe;
+    --accent-dim: #3d6fa0;
+    --green: #4ade80;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-header {
+    padding: 3rem 1.5rem 1rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .page-header h1 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .page-header a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .page-header a:hover { text-decoration: underline; }
+  .page-header .sub {
+    color: var(--text2);
+    font-size: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 3rem 0; }
+  section h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: all 0.25s;
+  }
+  .card:hover {
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .card p {
+    font-size: 0.95rem;
+    color: var(--text2);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  .card ul {
+    list-style: none;
+    margin-bottom: 0.75rem;
+  }
+  .card li {
+    font-size: 0.9rem;
+    color: var(--text2);
+    padding: 0.15rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .card li::before {
+    content: '›';
+    position: absolute; left: 0;
+    color: var(--accent-dim);
+  }
+  .card .tags {
+    display: flex; flex-wrap: wrap; gap: 0.3rem;
+  }
+  .card .tag {
+    display: inline-block;
+    background: var(--surface2);
+    color: var(--text2);
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--text2);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--text2); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="index.html">← Back</a>
+  <h1>Hardware &amp; Infrastructure</h1>
+  <p class="sub">Prototypes, systems, and builds.</p>
+</div>
+
+<div class="container">
+
+<section id="hardware">
+  <h2>Hardware</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Multi-Sensor Instrumentation System</h3>
+      <p>Multi-sensor fusion system for real-time process analysis in batch separation. Replaces subjective human judgment with objective data.</p>
+      <ul>
+        <li>Refractive index + temperature + conductivity sensors</li>
+        <li>Sub-$100 BOM target</li>
+        <li>Signal processing for real-time classification</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Sensors</span>
+        <span class="tag">Instrumentation</span>
+        <span class="tag">Signal Processing</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>USB Hardware Security Key</h3>
+      <p>Hardware-based authentication device. Plugs in, authenticates. Unplugs, locks. Deterministic credential generation from a seed — no stored secrets on the host.</p>
+      <ul>
+        <li>USB device, no driver needed</li>
+        <li>Auto-login on plug, auto-lock on unplug</li>
+        <li>Seed-based, no cloud dependency</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Embedded</span>
+        <span class="tag">USB</span>
+        <span class="tag">Security</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="infra">
+  <h2>Infrastructure</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Homelab</h3>
+      <p>Proxmox-based homelab with NAS, Beelink mini-PCs, and GPU compute for local LLM inference.</p>
+      <ul>
+        <li>Containerized service orchestration</li>
+        <li>Distributed AI agent infrastructure</li>
+        <li>Tiered model routing (local → hosted)</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Proxmox</span>
+        <span class="tag">NAS</span>
+        <span class="tag">Self-Hosting</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Healthcare Automation Framework</h3>
+      <p>Python automation for a neurology practice. Replaces manual document processing workflows with automated pipelines.</p>
+      <ul>
+        <li>OCR-to-classification-to-routing pipeline</li>
+        <li>REST API integration with practice management systems</li>
+        <li>Automated document retrieval and processing</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Automation</span>
+        <span class="tag">OCR</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Knowledge Architecture</h3>
+      <p>Hybrid retrieval system combining keyword search with semantic embeddings across 65+ project indexes.</p>
+      <div class="tags">
+        <span class="tag">RAG</span>
+        <span class="tag">FTS5</span>
+        <span class="tag">Semantic Search</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <p>
+    <a href="index.html">← Back to projects</a>
+    &nbsp;·&nbsp; <a href="https://rubino.io">rubino.io</a>
+  </p>
+</footer>
+
+</body>
+</html>
