@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nico Rubino</title>
+<title>Nico Rubino — Accounting &amp; Financial Operations</title>
 <style>
   :root {
     --ink: #1a1a1a;
@@ -42,6 +42,14 @@
     margin-bottom: 0.35rem;
   }
 
+  .kicker {
+    font-size: 1.18rem;
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
   .contact {
     font-size: 1.2rem;
     color: var(--muted);
@@ -53,6 +61,21 @@
   }
   .contact a:hover { text-decoration: underline; color: var(--ink); }
   .contact .sep { color: var(--rule); }
+
+  /* ── Downloads ── */
+  .downloads {
+    margin-top: 0.9rem;
+    font-size: 1.12rem;
+  }
+  .downloads a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+  }
+  .downloads a:hover { border-bottom-color: var(--accent); }
+  .downloads .sep { color: var(--rule); }
+  .downloads .note { color: var(--muted); font-style: italic; }
 
   /* ── Sections ── */
   section { margin: 1.75rem 0; }
@@ -111,6 +134,8 @@
     margin-left: 0;
     line-height: 1.6;
   }
+  .project .desc a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .project .desc a:hover { border-bottom-color: var(--accent); }
 
   /* Skills */
   .skill-block { margin-bottom: 0.7rem; }
@@ -155,26 +180,32 @@
 
   <header>
     <h1>Nico Rubino</h1>
+    <div class="kicker">Accounting &amp; Financial Operations</div>
     <p class="contact">
-      <span>St. Petersburg, FL</span>
+      <span>Naples, FL — Relocating to St. Petersburg (Q4 2026)</span>
       <span class="sep">&nbsp;·&nbsp;</span>
       <a href="mailto:rubinonico.jobs@gmail.com">rubinonico.jobs@gmail.com</a>
       <span class="sep">&nbsp;·&nbsp;</span>
       <span>239-227-3823</span>
-      <span class="sep">&nbsp;·&nbsp;</span>
-      <a href="https://rubinonico.github.io/portfolio/">rubinonico.github.io/portfolio</a>
     </p>
+    <div class="downloads">
+      <a href="assets/Rubino_Resume.pdf">Full resume (PDF)</a>
+      <span class="sep">&nbsp;·&nbsp;</span>
+      <a href="assets/Rubino_Resume_OnePage.pdf">One-page resume (PDF)</a>
+      <span class="sep">&nbsp;·&nbsp;</span>
+      <a href="gaming.html">Poker engines</a>
+    </div>
   </header>
 
   <section>
     <h2>Profile</h2>
     <p style="font-size:1.28rem; line-height:1.7;">
-      Accounting and operations professional pursuing a B.S. in Accounting (WGU, Spring
-      2026). Skilled in financial record-keeping, reconciliation, accounts payable,
-      compliance documentation, and workflow automation across professional and
-      financial-services settings. Combines hands-on financial operations experience
-      with technical depth in Python, data analysis, and process improvement.
-      Relocating to St. Petersburg, Florida — Q4 2026.
+      Accounting student and operations generalist with two years of accounts payable, accounts
+      receivable, reconciliation, and multi-entity compliance work inside a physician practice.
+      Builds Python automation for document and payer workflows. Independent quantitative
+      researcher with published negative results and a falsification-first methodology. Pursuing a
+      B.S. in Accounting at Western Governors University, expected Spring 2027. Seeking entry-level
+      accounting, bookkeeping, or financial operations work in Tampa Bay.
     </p>
   </section>
 
@@ -186,40 +217,45 @@
       <div class="role">Practice Operations &amp; Technology Associate</div>
       <div class="org-line">Mark P. Rubino MD, LLC &nbsp;|&nbsp; Naples, FL</div>
       <ul>
-        <li>Enforce federal DEA controlled substance compliance: ensure patients complete urine drug screening (UDS) prior to controlled substance prescribing, maintain documentation of results, and verify physician adherence to federal prescribing guidelines.</li>
-        <li>Verify step therapy and prior authorization compliance by confirming patients meet payer-specific coverage criteria before submission, including documentation of failed prior treatments.</li>
-        <li>Submit UDS lab results and compliance documentation as supporting evidence in prior authorization packages, strengthening clinical justification and reducing adverse determination risk.</li>
-        <li>Manage prior authorization workflows for chronic migraine therapeutics across commercial and Medicare Advantage payers.</li>
-        <li>Built a Python-based automation framework for medical records processing and prior authorization pipeline management.</li>
-        <li>Drafted formal legal correspondence, including demand letters and business entity formation documents; tracked regulatory compliance across jurisdictions.</li>
-        <li>Managed office operations: vendor relationships, IT support triage, facility coordination, and confidential records under HIPAA.</li>
-      </ul>
-    </div>
-
-    <div class="entry">
-      <span class="date">2024 — Present</span>
-      <div class="role">Assistant Scoutmaster</div>
-      <div class="org-line">Troop 165, Scouting America &nbsp;|&nbsp; Naples, FL</div>
-      <ul>
-        <li>Mentor youth in leadership development, civic responsibility, and wilderness preparedness; plan and execute service projects and camping expeditions.</li>
-        <li>Completed a 12-day backcountry trek at Philmont Scout Ranch (Cimarron, NM).</li>
+        <li>Process accounts payable end to end: vendor invoice intake, expense coding, approval routing, and payment scheduling.</li>
+        <li>Reconcile bank and expense accounts monthly and prepare the P&amp;L, expense categorization, and payroll records used for annual tax preparation by the external CPA.</li>
+        <li>Manage accounts receivable and the revenue cycle: charge capture, claim submission, denial management, appeal drafting, and follow-up on outstanding balances across commercial and Medicare Advantage payers.</li>
+        <li>Maintain multi-state entity compliance for a Wyoming holding LLC and a Florida operating LLC: annual registered agent coordination, state filings, business entity formation documents, and resolution of an IRS e-filing rejection (IND-031-04).</li>
+        <li>Oversee charge capture validation and payer policy compliance for neurology-specific billing, including coding review against payer coverage determinations.</li>
+        <li>Built a Python automation framework for records request processing and payer pipeline management, integrating the AthenaOne REST API, CoverMyMeds ePA webhooks, and fax ingestion through an OCR-to-classification-to-routing pipeline; architecture enforces PHI boundaries at the routing layer.</li>
+        <li>Led a practice systems migration and rebuilt the communications stack: new EHR platform with zero downtime during patient hours, vendor and IT contractor management, and records handling under HIPAA.</li>
       </ul>
     </div>
 
     <div class="entry">
       <span class="date">2022 — 2024</span>
-      <div class="role">Chef de Partie — Prepared Foods</div>
+      <div class="role">Chef de Partie — Prepared Foods (Pizza &amp; Chef's Case)</div>
       <div class="org-line">Whole Foods Market &nbsp;|&nbsp; Naples, FL</div>
       <ul>
-        <li>High-volume prepared food production in a USDA/FDA-regulated commercial kitchen; maintained HACCP compliance and led a small team.</li>
+        <li>Executed high-volume prepared food production in a USDA/FDA-regulated commercial kitchen; maintained HACCP compliance, cold-chain integrity, and portion-cost controls.</li>
+        <li>Managed station inventory rotation, waste reduction, and real-time production pacing; supervised and trained 3–5 team members per shift.</li>
       </ul>
     </div>
   </section>
 
   <section>
     <h2>Education</h2>
-    <p class="edu"><span class="school">Western Governors University</span> — <span class="detail">B.S. Accounting (In Progress), expected Fall 2026</span></p>
+    <p class="edu"><span class="school">Western Governors University</span> — <span class="detail">B.S. Accounting (In Progress), expected Spring 2027</span></p>
     <p class="edu"><span class="detail">Relevant coursework:</span> financial accounting, managerial accounting, federal taxation, business law, corporate finance, data management</p>
+    <p class="edu"><span class="detail">Progressing toward CPA licensure eligibility.</span></p>
+  </section>
+
+  <section>
+    <h2>Leadership &amp; Activities</h2>
+    <div class="entry">
+      <span class="date">2022 — Present</span>
+      <div class="role">Assistant Scoutmaster</div>
+      <div class="org-line">Troop 165, Scouting America &nbsp;|&nbsp; Naples, FL</div>
+      <ul>
+        <li>Lead a youth unit in leadership development, wilderness preparedness, and civic responsibility: plan and execute camping expeditions, merit badge instruction, and service projects.</li>
+        <li>Completed a 12-day backcountry trek at Philmont Scout Ranch (Cimarron, NM).</li>
+      </ul>
+    </div>
   </section>
 
   <section>
@@ -227,22 +263,32 @@
 
     <div class="project">
       <div class="name">Systematic Quantitative Research</div>
-      <div class="desc">Python-based research framework for systematic strategy development — data ingestion, signal computation, and statistical validation across multiple asset classes. Applied HMM regime detection, spectral graph analysis, and volatility dynamics modeling; implemented walk-forward validation with embargo periods and phased kill gates. Documented 50+ pages of technical research under version control.</div>
+      <div class="desc">Python research framework for systematic strategy development: data ingestion across multiple asset classes, signal computation, and walk-forward validation with embargo periods and sequential kill gates. Implemented HMM regime detection, spectral graph analysis, and volatility dynamics modeling. Documented 50+ pages of technical research under version control, including a post-mortem on a method that failed.</div>
     </div>
 
     <div class="project">
       <div class="name">Healthcare Automation Framework</div>
-      <div class="desc">OCR-to-classification-to-routing pipeline integrating the AthenaOne REST API and CoverMyMeds webhooks; HIPAA-compliant architecture with PHI boundary enforcement at the data-routing layer.</div>
+      <div class="desc">OCR-to-classification-to-routing pipeline integrating the AthenaOne REST API, CoverMyMeds ePA webhooks, and fax ingestion, replacing manual document triage in a live practice. HIPAA-compliant architecture with PHI boundary enforcement at the data-routing layer.</div>
     </div>
 
     <div class="project">
-      <div class="name">Poker Engines</div>
-      <div class="desc">Five Card Draw and Texas Hold'em built in vanilla JavaScript — hand evaluation, AI opponents, and Monte Carlo simulation. <a href="gaming.html" style="color:var(--accent);">Playable here</a>.</div>
+      <div class="name">Multi-Agent Orchestration Infrastructure</div>
+      <div class="desc">Model routing across tiered providers with automated project scaffolding, a persistent skill library, and cross-session memory for research and operations pipelines. 15+ production agent skills used daily for payer workflows, documentation, and writing tooling.</div>
     </div>
 
     <div class="project">
-      <div class="name">Hardware Prototypes</div>
-      <div class="desc">Low-cost multi-sensor instrumentation system (refractive index, temperature, conductivity); USB hardware security key; Proxmox-based home lab with GPU compute for local LLM inference.</div>
+      <div class="name">Game Engine &amp; Simulation Tools</div>
+      <div class="desc">Five Card Draw and Texas Hold'em engines in vanilla JavaScript, HTML, and CSS: hand evaluation, betting rounds, AI opponents, and Monte Carlo-style outcome simulation. <a href="gaming.html">Playable here</a>.</div>
+    </div>
+
+    <div class="project">
+      <div class="name">Personal Knowledge &amp; Retrieval Architecture</div>
+      <div class="desc">Hybrid retrieval over a 47+ document corpus combining FTS5 keyword search for exact terms with a semantic layer for conceptual queries; navigation protocol across 65+ project indexes.</div>
+    </div>
+
+    <div class="project">
+      <div class="name">Homelab &amp; Hardware Prototyping</div>
+      <div class="desc">Proxmox virtualization host with NAS storage, GPU pass-through for local model inference, and containerized services. Low-cost multi-sensor instrumentation system (refractive index, temperature, conductivity) and a USB hardware security key.</div>
     </div>
   </section>
 
@@ -250,31 +296,31 @@
     <h2>Skills</h2>
 
     <div class="skill-block">
-      <span class="cat">Regulatory &amp; Compliance:</span>
-      <p class="items">DEA controlled substance compliance · HIPAA · risk management frameworks · prior authorization · step therapy verification</p>
+      <span class="cat">Accounting &amp; Finance:</span>
+      <p class="items">Accounts payable · accounts receivable · bank and expense reconciliation · revenue cycle management · denial and appeal management · payroll records · P&amp;L preparation · entity compliance · multi-state filings</p>
     </div>
     <div class="skill-block">
-      <span class="cat">Programming &amp; Tools:</span>
-      <p class="items">Python (NumPy, Pandas, PyTorch) · SQL · JavaScript · Git · Docker · REST APIs</p>
+      <span class="cat">Programming &amp; Data:</span>
+      <p class="items">Python (NumPy, Pandas, PyTorch) · SQL · JavaScript · Git · Docker · REST API integration · OCR pipelines</p>
     </div>
     <div class="skill-block">
       <span class="cat">Quantitative:</span>
-      <p class="items">Walk-forward backtesting · time series analysis · statistical modeling · risk modeling</p>
+      <p class="items">Walk-forward backtesting · statistical hypothesis testing · HMM regime detection · spectral graph theory · volatility modeling · copula modeling · position sizing · risk management frameworks</p>
     </div>
     <div class="skill-block">
-      <span class="cat">Operations:</span>
-      <p class="items">Executive support · revenue cycle management · workflow automation · vendor management</p>
+      <span class="cat">AI &amp; Automation:</span>
+      <p class="items">LLM agent orchestration · MCP server architecture · retrieval-augmented generation · self-hosted LLMs · workflow automation (n8n) · technical specification writing</p>
     </div>
     <div class="skill-block">
-      <span class="cat">Hardware:</span>
-      <p class="items">Sensor integration · Proxmox / self-hosting · embedded systems · USB hardware</p>
+      <span class="cat">Operations &amp; Compliance:</span>
+      <p class="items">Practice operations management · vendor management · legal document drafting · records management · HIPAA · payer policy analysis · HACCP and food safety</p>
     </div>
   </section>
 
   <section>
     <h2>Certifications</h2>
-    <p class="cert">Google IT Support Professional Certificate (completed)</p>
     <p class="cert">QuickBooks ProAdvisor (in progress)</p>
+    <p class="cert">Google IT Support Professional Certificate (2021)</p>
   </section>
 
   <footer>
