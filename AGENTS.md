@@ -21,8 +21,10 @@ Static site published at **https://rubinonico.github.io/portfolio/** via GitHub 
 1. **No unverifiable numbers.** Every figure on the page must trace to an artifact in the vault or the
    repo. "47+ documents", "65+ indexes", "50+ pages" and "published negative results" were all removed
    for failing this rule — do not reintroduce them.
-2. **Employment of record is `Mark P. Rubino MD, LLC`** (per `resume-system/master_resume.yaml`), with
-   `NEXGEN Hyperbarics` as its DBA. Not the reverse.
+2. **Print the employer as `NEXGEN Hyperbarics` and nothing else.** The legal entity is `Mark P. Rubino MD,
+   LLC`, whose owner is also the candidate's father; naming it reads as nepotism and undercuts the
+   application. The DBA is the market-facing name and is what goes on every artifact. The LLC will surface
+   in a background check — that is normal and expected, not a discrepancy.
 3. **Degree status:** B.S. Accounting, WGU, **27 competency units remaining** after the term ending
    2027-01-31. "Expected Spring 2027" is wrong — do not restore it.
 4. **Positioning leads accounting/assurance, not healthcare operations.** Healthcare exit is a standing
